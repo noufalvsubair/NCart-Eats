@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/components/app_checkbox.dart';
+import 'package:ncart_eats/components/app_phone_field.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 
@@ -14,6 +15,14 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   late bool termsAndConditionEnabled = true;
   late bool rememberMeEnabled = false;
+  late TextEditingController phoneNumberFieldController;
+
+  @override
+  void initState() {
+    phoneNumberFieldController = TextEditingController();
+
+    super.initState();
+  }
 
   Widget _buildLogoImageWidget() =>
       Center(child: Image.asset('assets/images/logo.png'));
@@ -36,34 +45,7 @@ class _LoginState extends State<Login> {
                 offset: Offset(0.0, 0.5), //(x,y)
                 blurRadius: 3.0)
           ]),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("🇮🇳", style: GoogleFonts.encodeSans(fontSize: 16)),
-            Padding(
-                padding: const EdgeInsets.only(left: 5),
-                child: Text("+91",
-                    style: GoogleFonts.roboto(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.normalTextColor))),
-            const Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: Icon(Icons.arrow_drop_down_outlined,
-                    color: Colors.grey, size: 20)),
-            Flexible(
-                child: TextField(
-                    keyboardType: TextInputType.number,
-                    maxLength: 10,
-                    cursorColor: AppColors.themeColor,
-                    decoration: InputDecoration(
-                        hintText: S.of(context).phone,
-                        hintStyle: GoogleFonts.encodeSans(
-                            fontSize: 14, fontWeight: FontWeight.w500),
-                        border: InputBorder.none,
-                        counterText: "")))
-          ]));
+      child: AppPhoneField(fieldEditController: phoneNumberFieldController));
 
   Widget _buildRememberMeWidget() => Padding(
       padding: const EdgeInsets.only(left: 5, right: 15, top: 15),
