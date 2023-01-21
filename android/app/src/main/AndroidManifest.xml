@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ncart.ncart_eats">
    <application
-        android:label="ncart_eats"
+        android:label="NCart Eats"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

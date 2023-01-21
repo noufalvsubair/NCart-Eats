@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
         title: 'NCart Eats',
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           S.delegate,
           GlobalMaterialLocalizations.delegate,

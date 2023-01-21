@@ -1,3 +1,10 @@
 {
-  "signIn": "Sign In"
+  "signIn": "Sign In",
+  "phone": "Phone",
+  "rememberMe": "Remember Me",
+  "termAndCondition": "Terms & Condition ",
+  "termsAndConditionDescription": "I agree with",
+  "signUp": "Sign Up",
+  "continueAs": "Continue as ",
+  "guest": "Guest"
 }
