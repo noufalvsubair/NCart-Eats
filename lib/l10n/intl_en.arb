@@ -6,5 +6,7 @@
   "termsAndConditionDescription": "I agree with",
   "signUp": "Sign Up",
   "continueAs": "Continue as ",
-  "guest": "Guest"
+  "guest": "Guest",
+  "firstName": "First Name",
+  "lastName": "Last Name"
 }

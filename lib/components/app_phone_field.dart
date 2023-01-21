@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/utils/decoration_utils.dart';
 
 class AppPhoneField extends StatelessWidget {
   final TextEditingController fieldEditController;
@@ -33,12 +34,8 @@ class AppPhoneField extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   maxLength: 10,
                   cursorColor: AppColors.themeColor,
-                  decoration: InputDecoration(
-                      hintText: S.of(context).phone,
-                      hintStyle: GoogleFonts.encodeSans(
-                          fontSize: 14, fontWeight: FontWeight.w500),
-                      border: InputBorder.none,
-                      counterText: "")))
+                  decoration: DecorationUtils.fieldDecorations(
+                      context, S.of(context).phone)))
         ]);
   }
 }
