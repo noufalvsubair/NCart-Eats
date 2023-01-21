@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ncart_eats/generated/l10n.dart';
-
-import 'screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/authentication/Login.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
