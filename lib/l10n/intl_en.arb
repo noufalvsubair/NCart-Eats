@@ -1,6 +1,7 @@
 {
   "signIn": "Sign In",
   "phone": "Phone",
+  "phoneError": "Please enter a valid Phone Number.",
   "rememberMe": "Remember Me",
   "termAndCondition": "Terms & Condition ",
   "termsAndConditionDescription": "I agree with",
@@ -8,7 +9,9 @@
   "continueAs": "Continue as ",
   "guest": "Guest",
   "firstName": "First Name",
+  "firstNameError": "Please enter a First Name",
   "lastName": "Last Name",
+  "lastNameError": "Please enter a Last Name",
   "termsAndConditionInfo": "Welcome to ncarteats.com website and our applications (each of our \"Service\"). This page (together with the documents referred to on it) tells you the terms and conditions on which our partner restaurants supply any of their meals (the\"Meals\") listed on our site to you. Please read these terms and conditions carefully before ordering any Meals from our site. By accessing our site and placing an order you agree to be bound by these terms and conditions and our terms of use policy.\n\nIf you have any questions relating to these terms and conditions please contact info@ncarteats.com before you place an order. If you do not accept these terms and conditions in full please do not use our Service.ō",
   "information": "Information",
   "termsAndConditionInfoDescription": "Ncart eats is a business where the food is prepared by independent restaurants (our \"Partner Restaurants\") and delivered by us.",

@@ -8,6 +8,7 @@ import 'package:ncart_eats/screen/authentication/Login.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
 import 'package:ncart_eats/utils/decoration_utils.dart';
 import 'package:ncart_eats/utils/utils.dart';
+import 'package:ncart_eats/utils/validation_utils.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -29,6 +30,27 @@ class _SignUpState extends State<SignUp> {
     phoneNumberFieldController = TextEditingController();
 
     super.initState();
+  }
+
+  void _onSignUpButtonTapped() {
+    String firstName = firstNameFieldController.text;
+    if (firstName.isEmpty) {
+      Utils.showToastBar(S.of(context).firstNameError, context);
+      return;
+    }
+
+    String lastName = lastNameFieldController.text;
+    if (lastName.isEmpty) {
+      Utils.showToastBar(S.of(context).lastNameError, context);
+      return;
+    }
+
+    String phoneNumber = phoneNumberFieldController.text;
+    if (phoneNumber.isEmpty ||
+        !ValidationUtils.validatePhoneNumber(phoneNumber)) {
+      Utils.showToastBar(S.of(context).phoneError, context);
+      return;
+    }
   }
 
   Widget _buildLogoImageWidget() => Padding(
@@ -126,7 +148,7 @@ class _SignUpState extends State<SignUp> {
                 height: 45,
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => _onSignUpButtonTapped(),
                     style: TextButton.styleFrom(
                         backgroundColor: AppColors.themeColor,
                         foregroundColor: Colors.white),
