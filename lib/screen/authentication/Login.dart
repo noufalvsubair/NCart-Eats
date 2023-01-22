@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ncart_eats/components/app_checkbox.dart';
-import 'package:ncart_eats/components/app_phone_field.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/utilities.dart';
+import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/sign_up.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
-import 'package:ncart_eats/utils/utils.dart';
+import 'package:ncart_eats/widget/app_checkbox.dart';
+import 'package:ncart_eats/widget/app_phone_field.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -25,6 +27,23 @@ class _LoginState extends State<Login> {
     phoneNumberFieldController = TextEditingController();
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneNumberFieldController.dispose();
+
+    super.dispose();
+  }
+
+  void _onSignInButtonTapped() {
+    String phoneNumber = phoneNumberFieldController.text;
+    if (phoneNumber.isEmpty || !Validator.validatePhoneNumber(phoneNumber)) {
+      Utilities.showToastBar(S.of(context).phoneError, context);
+      return;
+    }
+
+    Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
   }
 
   Widget _buildLogoImageWidget() =>
@@ -72,8 +91,8 @@ class _LoginState extends State<Login> {
             Padding(
                 padding: const EdgeInsets.only(left: 5),
                 child: InkWell(
-                    onTap: () =>
-                        Utils.navigateTo(context, const TermsAndCondition()),
+                    onTap: () => Utilities.navigateTo(
+                        context, const TermsAndCondition()),
                     child: Text(S.of(context).termAndCondition,
                         style: GoogleFonts.roboto(
                             fontSize: 14,
@@ -91,8 +110,8 @@ class _LoginState extends State<Login> {
                 height: 45,
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 child: TextButton(
-                    onPressed: () =>
-                        Utils.navigateWithReplacement(context, const SignUp()),
+                    onPressed: () => Utilities.navigateWithReplacement(
+                        context, const SignUp()),
                     style: TextButton.styleFrom(
                         foregroundColor: AppColors.themeColor),
                     child: Text(S.of(context).signUp,
@@ -105,7 +124,7 @@ class _LoginState extends State<Login> {
                 height: 45,
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => _onSignInButtonTapped(),
                     style: TextButton.styleFrom(
                         backgroundColor: AppColors.themeColor,
                         foregroundColor: Colors.white),

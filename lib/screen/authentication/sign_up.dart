@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ncart_eats/components/app_checkbox.dart';
-import 'package:ncart_eats/components/app_phone_field.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/utilities.dart';
+import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
-import 'package:ncart_eats/utils/decoration_utils.dart';
-import 'package:ncart_eats/utils/utils.dart';
+import 'package:ncart_eats/widget/app_checkbox.dart';
+import 'package:ncart_eats/widget/app_phone_field.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -31,6 +33,37 @@ class _SignUpState extends State<SignUp> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    firstNameFieldController.dispose();
+    lastNameFieldController.dispose();
+    phoneNumberFieldController.dispose();
+
+    super.dispose();
+  }
+
+  void _onSignUpButtonTapped() {
+    String firstName = firstNameFieldController.text;
+    if (firstName.isEmpty) {
+      Utilities.showToastBar(S.of(context).firstNameError, context);
+      return;
+    }
+
+    String lastName = lastNameFieldController.text;
+    if (lastName.isEmpty) {
+      Utilities.showToastBar(S.of(context).lastNameError, context);
+      return;
+    }
+
+    String phoneNumber = phoneNumberFieldController.text;
+    if (phoneNumber.isEmpty || !Validator.validatePhoneNumber(phoneNumber)) {
+      Utilities.showToastBar(S.of(context).phoneError, context);
+      return;
+    }
+
+    Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
+  }
+
   Widget _buildLogoImageWidget() => Padding(
       padding: const EdgeInsets.only(top: 60),
       child: Center(child: Image.asset('assets/images/logo.png')));
@@ -44,7 +77,7 @@ class _SignUpState extends State<SignUp> {
   Widget _buildFirstNameFieldWidget() => TextField(
       controller: firstNameFieldController,
       cursorColor: AppColors.themeColor,
-      decoration: DecorationUtils.fieldDecorationWithIcon(
+      decoration: AppStyles.fieldDecorationWithIcon(
           context,
           S.of(context).firstName,
           const Icon(Icons.account_circle,
@@ -53,7 +86,7 @@ class _SignUpState extends State<SignUp> {
   Widget _buildLastNameFieldWidget() => TextField(
       controller: lastNameFieldController,
       cursorColor: AppColors.themeColor,
-      decoration: DecorationUtils.fieldDecorationWithIcon(
+      decoration: AppStyles.fieldDecorationWithIcon(
           context,
           S.of(context).lastName,
           const Icon(Icons.account_circle,
@@ -93,8 +126,8 @@ class _SignUpState extends State<SignUp> {
             Padding(
                 padding: const EdgeInsets.only(left: 5),
                 child: InkWell(
-                    onTap: () =>
-                        Utils.navigateTo(context, const TermsAndCondition()),
+                    onTap: () => Utilities.navigateTo(
+                        context, const TermsAndCondition()),
                     child: Text(S.of(context).termAndCondition,
                         style: GoogleFonts.roboto(
                             fontSize: 14,
@@ -112,8 +145,8 @@ class _SignUpState extends State<SignUp> {
                 height: 45,
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 child: TextButton(
-                    onPressed: () =>
-                        Utils.navigateWithReplacement(context, const Login()),
+                    onPressed: () => Utilities.navigateWithReplacement(
+                        context, const Login()),
                     style: TextButton.styleFrom(
                         foregroundColor: AppColors.themeColor),
                     child: Text(S.of(context).signIn,
@@ -126,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                 height: 45,
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => _onSignUpButtonTapped(),
                     style: TextButton.styleFrom(
                         backgroundColor: AppColors.themeColor,
                         foregroundColor: Colors.white),
