@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Utils {
+class Utilities {
   static showToastBar(String message, BuildContext context) {
     Fluttertoast.showToast(
         msg: message,

@@ -36,5 +36,10 @@
   "entireAgreement": "Entire Agreement",
   "entireAgreementDescription": "These terms contain the entire agreement between the parties relating to its subject matter and supersedes all prior agreements, arrangements and understandings between the parties relating to that subject matter.",
   "lawAndJurisdiction": "Law & Jurisdiction",
-  "lawAndJurisdictionDescription": "The Indian courts will have jurisdiction over any claim arising from, or related to, any use of our services. These terms of use and any dispute or claim arising out of or in connection with them or their subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of India."
+  "lawAndJurisdictionDescription": "The Indian courts will have jurisdiction over any claim arising from, or related to, any use of our services. These terms of use and any dispute or claim arising out of or in connection with them or their subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of India.",
+  "otpVerification": "OTP Verification",
+  "otpVerificationDescription": "Enter the verification code (OTP) sent to ",
+  "resendOtpDescription": "Didn't receive the code?",
+  "resend": "Resend",
+  "verify": "Verify"
 }
