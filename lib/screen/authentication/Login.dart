@@ -29,6 +29,13 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    phoneNumberFieldController.dispose();
+
+    super.dispose();
+  }
+
   void _onSignInButtonTapped() {
     String phoneNumber = phoneNumberFieldController.text;
     if (phoneNumber.isEmpty || !Validator.validatePhoneNumber(phoneNumber)) {

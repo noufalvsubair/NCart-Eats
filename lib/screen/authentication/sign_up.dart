@@ -33,6 +33,15 @@ class _SignUpState extends State<SignUp> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    firstNameFieldController.dispose();
+    lastNameFieldController.dispose();
+    phoneNumberFieldController.dispose();
+
+    super.dispose();
+  }
+
   void _onSignUpButtonTapped() {
     String firstName = firstNameFieldController.text;
     if (firstName.isEmpty) {
