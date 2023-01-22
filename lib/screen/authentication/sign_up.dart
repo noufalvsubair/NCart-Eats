@@ -5,6 +5,7 @@ import 'package:ncart_eats/components/app_phone_field.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
 import 'package:ncart_eats/utils/decoration_utils.dart';
 import 'package:ncart_eats/utils/utils.dart';
 
@@ -92,7 +93,8 @@ class _SignUpState extends State<SignUp> {
             Padding(
                 padding: const EdgeInsets.only(left: 5),
                 child: InkWell(
-                    onTap: () {},
+                    onTap: () =>
+                        Utils.navigateTo(context, const TermsAndCondition()),
                     child: Text(S.of(context).termAndCondition,
                         style: GoogleFonts.roboto(
                             fontSize: 14,
