@@ -9,6 +9,7 @@ import 'package:ncart_eats/model/current_location.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/screen/location/select_map_location.dart';
 import 'package:ncart_eats/widget/app_button.dart';
 
 class SetLocation extends ConsumerStatefulWidget {
@@ -30,7 +31,8 @@ class _SetLocationState extends ConsumerState<SetLocation> {
     }
   }
 
-  void _onSetFromMapButtonTapped() {}
+  void _onSetFromMapButtonTapped() =>
+      Utilities.navigateTo(context, const SelectMapLocation());
 
   PreferredSize _buildAppBarWidget() => PreferredSize(
       preferredSize: const Size.fromHeight(50),
