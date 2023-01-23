@@ -23,7 +23,8 @@ class SelectMapLocation extends ConsumerStatefulWidget {
 
 class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
   late Completer<GoogleMapController> mapController;
-  late CurrentLocation selectedLocation;
+  CurrentLocation? selectedLocation;
+  CameraPosition? mapCameraPosition;
 
   @override
   void initState() {
@@ -34,6 +35,11 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
         const Duration(seconds: 0), () => _fetchCurrentLocationInfo());
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _fetchCurrentLocationInfo() async {
@@ -58,16 +64,21 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
     ref.read(loaderIndicatorProvider.notifier).hide();
   }
 
-  void _fetchLocationFromLatLng(CameraPosition cameraPosition) async {
-    try {
-      ref.read(loaderIndicatorProvider.notifier).show();
-      CurrentLocation location = await Locations.getLocationFromLatLng(
-          cameraPosition.target.latitude, cameraPosition.target.longitude);
-      _setMapLocation(location);
-      setState(() => selectedLocation = location);
-    } catch (error) {
-      ref.read(loaderIndicatorProvider.notifier).hide();
-      Utilities.showToastBar(S.of(context).locationPermissionError, context);
+  void _fetchLocationFromLatLng() async {
+    if (mapCameraPosition != null &&
+        selectedLocation != null &&
+        selectedLocation!.latitude != mapCameraPosition!.target.latitude) {
+      try {
+        ref.read(loaderIndicatorProvider.notifier).show();
+        CurrentLocation location = await Locations.getLocationFromLatLng(
+            mapCameraPosition!.target.latitude,
+            mapCameraPosition!.target.longitude);
+        _setMapLocation(location);
+        setState(() => selectedLocation = location);
+      } catch (error) {
+        ref.read(loaderIndicatorProvider.notifier).hide();
+        Utilities.showToastBar(S.of(context).locationPermissionError, context);
+      }
     }
   }
 
@@ -96,7 +107,7 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
                 Flexible(
                     child: Padding(
                         padding: const EdgeInsets.only(left: 5),
-                        child: Text(selectedLocation.name!,
+                        child: Text(selectedLocation!.name!,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.openSans(
                                 color: AppColors.normalTextColor,
@@ -118,6 +129,9 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
           target: LatLng(9.981636, 76.299881), zoom: 14.4746),
       zoomControlsEnabled: false,
       compassEnabled: false,
+      onCameraMove: (CameraPosition cameraPosition) =>
+          setState(() => mapCameraPosition = cameraPosition),
+      onCameraIdle: () => _fetchLocationFromLatLng(),
       onMapCreated: (GoogleMapController controller) =>
           mapController.complete(controller));
 
@@ -160,7 +174,7 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
         backgroundColor: Colors.white,
         body: Stack(children: [
           _buildGoogleMapWidget(),
-          if (selectedLocation.name != null) _buildLocationNameWidget(),
+          if (selectedLocation!.name != null) _buildLocationNameWidget(),
           _buildCircularIndicatorWidget(loaderEnabled),
           if (!loaderEnabled) _buildGoogleMapMarkerWidget(),
           if (!loaderEnabled) _buildCurrentLocationButtonWidget(),
