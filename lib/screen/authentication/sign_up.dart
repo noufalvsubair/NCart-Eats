@@ -5,6 +5,7 @@ import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/screen/authentication/Login.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
@@ -68,7 +69,7 @@ class _SignUpState extends State<SignUp> {
 
   Widget _buildLogoImageWidget() => Padding(
       padding: const EdgeInsets.only(top: 60),
-      child: Center(child: Image.asset('assets/images/logo.png')));
+      child: Center(child: Image.asset(AppIcons.logo)));
 
   Widget _buildTitleTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 15),

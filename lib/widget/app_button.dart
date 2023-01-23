@@ -15,6 +15,7 @@ class AppButton extends StatelessWidget {
   final VoidCallback onTapped;
   final double? width;
   final double? height;
+  final IconData? icon;
 
   const AppButton(
       {Key? key,
@@ -22,17 +23,30 @@ class AppButton extends StatelessWidget {
       required this.type,
       required this.onTapped,
       this.width,
-      this.height = 45})
+      this.height = 45,
+      this.icon})
       : super(key: key);
 
-  Widget _buildButtonTextWidget() => Text(label,
-      textAlign: TextAlign.center,
-      style: GoogleFonts.roboto(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: type == ButtonType.primary.toString()
-              ? Colors.white
-              : AppColors.themeColor));
+  Widget _buildButtonTextWidget() => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (icon != null)
+              Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Icon(icon,
+                      color: type == ButtonType.primary.toString()
+                          ? Colors.white
+                          : AppColors.themeColor)),
+            Text(label,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.roboto(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: type == ButtonType.primary.toString()
+                        ? Colors.white
+                        : AppColors.themeColor))
+          ]);
 
   Widget _buildTextButtonWidget() => TextButton(
       onPressed: onTapped,

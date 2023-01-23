@@ -5,6 +5,7 @@ import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/sign_up.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
@@ -48,8 +49,7 @@ class _LoginState extends State<Login> {
     Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
   }
 
-  Widget _buildLogoImageWidget() =>
-      Center(child: Image.asset('assets/images/logo.png'));
+  Widget _buildLogoImageWidget() => Center(child: Image.asset(AppIcons.logo));
 
   Widget _buildTitleTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 15),

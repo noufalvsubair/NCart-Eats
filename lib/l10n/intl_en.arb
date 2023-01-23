@@ -41,5 +41,9 @@
   "otpVerificationDescription": "Enter the verification code (OTP) sent to ",
   "resendOtpDescription": "Didn't receive the code?",
   "resend": "Resend",
-  "verify": "Verify"
+  "verify": "Verify",
+  "setLocation": "Set Location",
+  "emptyAddress": "No saved address found",
+  "useCurrentLocation": "Use Current Location",
+  "setFromMap": "Set From Map"
 }

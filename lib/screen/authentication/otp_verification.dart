@@ -5,8 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/screen/location/set_location.dart';
 import 'package:ncart_eats/widget/app_button.dart';
 import 'package:ncart_eats/widget/app_otp_field.dart';
 
@@ -128,7 +130,8 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
   Widget _buildVerifyButtonWidget() => AppButton(
       label: S.of(context).verify,
       type: ButtonType.primary.toString(),
-      onTapped: () {});
+      onTapped: () =>
+          Utilities.navigateAndClearAll(context, const SetLocation()));
 
   @override
   Widget build(BuildContext context) {
