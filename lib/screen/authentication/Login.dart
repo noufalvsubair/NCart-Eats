@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/sign_up.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
+import 'package:ncart_eats/widget/app_button.dart';
 import 'package:ncart_eats/widget/app_checkbox.dart';
 import 'package:ncart_eats/widget/app_phone_field.dart';
 
@@ -46,8 +49,7 @@ class _LoginState extends State<Login> {
     Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
   }
 
-  Widget _buildLogoImageWidget() =>
-      Center(child: Image.asset('assets/images/logo.png'));
+  Widget _buildLogoImageWidget() => Center(child: Image.asset(AppIcons.logo));
 
   Widget _buildTitleTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 15),
@@ -106,34 +108,17 @@ class _LoginState extends State<Login> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-                height: 45,
+            AppButton(
                 width: (MediaQuery.of(context).size.width - 40) / 2,
-                child: TextButton(
-                    onPressed: () => Utilities.navigateWithReplacement(
-                        context, const SignUp()),
-                    style: TextButton.styleFrom(
-                        foregroundColor: AppColors.themeColor),
-                    child: Text(S.of(context).signUp,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.themeColor)))),
-            SizedBox(
-                height: 45,
+                label: S.of(context).signUp,
+                type: ButtonType.secondary.toString(),
+                onTapped: () =>
+                    Utilities.navigateWithReplacement(context, const SignUp())),
+            AppButton(
                 width: (MediaQuery.of(context).size.width - 40) / 2,
-                child: TextButton(
-                    onPressed: () => _onSignInButtonTapped(),
-                    style: TextButton.styleFrom(
-                        backgroundColor: AppColors.themeColor,
-                        foregroundColor: Colors.white),
-                    child: Text(S.of(context).signIn,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white))))
+                label: S.of(context).signIn,
+                type: ButtonType.primary.toString(),
+                onTapped: _onSignInButtonTapped)
           ]));
 
   Widget _buildContinueAsGuestWidget() => Center(
