@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/widget/app_button.dart';
 import 'package:ncart_eats/widget/app_otp_field.dart';
 
 class OtpVerification extends ConsumerStatefulWidget {
@@ -33,6 +35,7 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
 
   @override
   void dispose() {
+    ref.read(timerIndicatorProvider.notifier).setTime(60);
     otpTimer.cancel();
 
     super.dispose();
@@ -40,8 +43,6 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
 
   void _startTimer() {
     int startTime = 60;
-    ref.read(timerIndicatorProvider.notifier).setTime(startTime);
-
     const seconds = Duration(seconds: 1);
     otpTimer = Timer.periodic(seconds, (Timer timer) {
       if (startTime == 0) {
@@ -124,20 +125,10 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
             _buildResendButtonWidget()
           ]));
 
-  Widget _buildVerifyButtonWidget() => SizedBox(
-      height: 45,
-      width: MediaQuery.of(context).size.width - 40,
-      child: TextButton(
-          onPressed: () {},
-          style: TextButton.styleFrom(
-              backgroundColor: AppColors.themeColor,
-              foregroundColor: Colors.white),
-          child: Text(S.of(context).verify,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white))));
+  Widget _buildVerifyButtonWidget() => AppButton(
+      label: S.of(context).verify,
+      type: ButtonType.primary.toString(),
+      onTapped: () {});
 
   @override
   Widget build(BuildContext context) {
