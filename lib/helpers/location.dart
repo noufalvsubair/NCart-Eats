@@ -18,14 +18,20 @@ class Locations {
     }
 
     Position currentPosition = await Geolocator.getCurrentPosition();
-    List<Placemark> locations = await placemarkFromCoordinates(
+    CurrentLocation currentLocation = await getLocationFromLatLng(
         currentPosition.latitude, currentPosition.longitude);
+
+    return currentLocation;
+  }
+
+  static Future<CurrentLocation> getLocationFromLatLng(
+      double latitude, double longitude) async {
+    List<Placemark> locations =
+        await placemarkFromCoordinates(latitude, longitude);
     String address = createAddressFromPlaceMar(locations.first);
 
     return CurrentLocation(
-        name: address,
-        latitude: currentPosition.latitude,
-        longitude: currentPosition.longitude);
+        name: address, latitude: latitude, longitude: longitude);
   }
 
   static String createAddressFromPlaceMar(Placemark location) {
