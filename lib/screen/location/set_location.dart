@@ -3,8 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/location.dart';
+import 'package:ncart_eats/helpers/utilities.dart';
+import 'package:ncart_eats/model/current_location.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
+import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/widget/app_button.dart';
 
 class SetLocation extends ConsumerStatefulWidget {
@@ -15,6 +19,19 @@ class SetLocation extends ConsumerStatefulWidget {
 }
 
 class _SetLocationState extends ConsumerState<SetLocation> {
+  void _onUseCurrentLocationButtonTapped() async {
+    try {
+      ref.read(loaderIndicatorProvider.notifier).show();
+      CurrentLocation currentLocation = await Locations.getCurrentLocation();
+      ref.read(loaderIndicatorProvider.notifier).hide();
+    } catch (error) {
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      Utilities.showToastBar(S.of(context).locationPermissionError, context);
+    }
+  }
+
+  void _onSetFromMapButtonTapped() {}
+
   PreferredSize _buildAppBarWidget() => PreferredSize(
       preferredSize: const Size.fromHeight(50),
       child: AppBar(
@@ -28,6 +45,15 @@ class _SetLocationState extends ConsumerState<SetLocation> {
                   fontWeight: FontWeight.w500,
                   color: AppColors.normalTextColor))));
 
+  Widget _buildCircularIndicatorWidget(bool enabled) => enabled
+      ? const Center(
+          child: SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                  strokeWidth: 4, color: AppColors.themeColor)))
+      : Container();
+
   Widget _buildEmptyIconWidget() =>
       Center(child: Image.asset(AppIcons.emptyAddress));
 
@@ -39,33 +65,38 @@ class _SetLocationState extends ConsumerState<SetLocation> {
               fontSize: 14,
               color: AppColors.transparentTextColor)));
 
-  Widget _buildUseCurrentLocationButtonWidget() => AppButton(
+  Widget _buildUseCurrentLocationButtonWidget(bool enabled) => AppButton(
       label: S.of(context).useCurrentLocation,
       type: ButtonType.primary.toString(),
       icon: Icons.my_location,
-      onTapped: () {});
+      onTapped: () => enabled ? null : _onUseCurrentLocationButtonTapped());
 
-  Widget _buildSetFromMapButtonWidget() => AppButton(
+  Widget _buildSetFromMapButtonWidget(bool enabled) => AppButton(
       label: S.of(context).setFromMap,
       type: ButtonType.tertiary.toString(),
       icon: Icons.map_sharp,
-      onTapped: () {});
+      onTapped: () => enabled ? null : _onSetFromMapButtonTapped());
 
   @override
   Widget build(BuildContext context) {
+    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: _buildAppBarWidget(),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildEmptyIconWidget(),
-              _buildEmptyMessageTextWidget(),
-              _buildUseCurrentLocationButtonWidget(),
-              Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: _buildSetFromMapButtonWidget())
-            ]));
+        body: Stack(children: [
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _buildEmptyIconWidget(),
+                _buildEmptyMessageTextWidget(),
+                _buildUseCurrentLocationButtonWidget(loaderEnabled),
+                Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: _buildSetFromMapButtonWidget(loaderEnabled))
+              ]),
+          _buildCircularIndicatorWidget(loaderEnabled)
+        ]));
   }
 }

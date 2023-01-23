@@ -38,6 +38,7 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
   @override
   void dispose() {
     ref.read(timerIndicatorProvider.notifier).setTime(60);
+    otpFieldController.dispose();
     otpTimer.cancel();
 
     super.dispose();

@@ -109,7 +109,8 @@ class _AppOtpFieldState extends State<AppOtpField> {
             keyboardType: widget.keyboardType,
             textCapitalization: widget.textCapitalization,
             textAlign: TextAlign.center,
-            style: GoogleFonts.roboto(fontWeight: FontWeight.bold, fontSize: 14),
+            style:
+                GoogleFonts.roboto(fontWeight: FontWeight.bold, fontSize: 14),
             inputFormatters: widget.inputFormatter,
             maxLength: 1,
             focusNode: _focusNodes[index],
@@ -165,7 +166,9 @@ class _AppOtpFieldState extends State<AppOtpField> {
                   currentPin.length == widget.length) {
                 widget.onCompleted?.call(currentPin);
               }
-              widget.onChanged!(currentPin);
+              if (widget.onChanged != null) {
+                widget.onChanged!(currentPin);
+              }
             }));
   }
 
@@ -267,6 +270,13 @@ class OtpFieldController {
     widget.onChanged?.call(newPin);
 
     widget.onCompleted?.call(newPin);
+  }
+
+  void dispose() {
+    final textControllers = _otpTextFieldState._textControllers;
+    for (int i = 0; i < textControllers.length; i++) {
+      textControllers[i]!.dispose();
+    }
   }
 
   void setValue(String value, int position) {

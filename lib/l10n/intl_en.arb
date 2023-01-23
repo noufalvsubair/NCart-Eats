@@ -45,5 +45,6 @@
   "setLocation": "Set Location",
   "emptyAddress": "No saved address found",
   "useCurrentLocation": "Use Current Location",
-  "setFromMap": "Set From Map"
+  "setFromMap": "Set From Map",
+  "locationPermissionError": "We couldn't fetch the current location info. Could you please allow the location permission"
 }
