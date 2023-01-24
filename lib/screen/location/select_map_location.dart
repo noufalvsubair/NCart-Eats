@@ -37,11 +37,6 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void _fetchCurrentLocationInfo() async {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();

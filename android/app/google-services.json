@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "406105907995",
+    "project_id": "ncart-eats",
+    "storage_bucket": "ncart-eats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406105907995:android:6c293c0ea183620d0c69be",
+        "android_client_info": {
+          "package_name": "com.ncart.ncart_eats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "406105907995-nl584cm9jobo19qj87e59ojuscq9rcrd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ncart.ncart_eats",
+            "certificate_hash": "a6b35cf18c15b1f0a5c25c2cc86f74e110e51d2e"
+          }
+        },
+        {
+          "client_id": "406105907995-45abn6040m40na018jj1l0ounf429092.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBE_8xhGKamZXKaif2Uq7tYZpou6MG1Nw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "406105907995-45abn6040m40na018jj1l0ounf429092.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
