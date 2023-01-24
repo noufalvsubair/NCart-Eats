@@ -47,5 +47,6 @@
   "useCurrentLocation": "Use Current Location",
   "setFromMap": "Set From Map",
   "locationPermissionError": "We couldn't fetch the current location info. Could you please allow the location permission.",
-  "pickLocation": "Pick Location"
+  "pickLocation": "Pick Location",
+  "signInError": "Unable to sign in. Please try again later.."
 }

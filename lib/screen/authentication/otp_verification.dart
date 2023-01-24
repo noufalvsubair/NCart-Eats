@@ -85,12 +85,13 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
                     color: AppColors.normalTextColor))
           ])));
 
-  Widget _buildOtpFieldWidget() => Padding(
-      padding: const EdgeInsets.only(top: 30),
-      child: AppOtpField(
-          controller: otpFieldController,
-          onCompleted: (String? otp) =>
-              setState(() => verificationCode = otp!)));
+  Widget _buildOtpFieldWidget() => Flexible(
+      child: Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: AppOtpField(
+              controller: otpFieldController,
+              onCompleted: (String? otp) =>
+                  setState(() => verificationCode = otp!))));
 
   Widget _buildResendTextWidget(int time) =>
       Text(time == 0 ? S.of(context).resend : '${S.of(context).resend}($time)',

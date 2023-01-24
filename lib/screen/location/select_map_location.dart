@@ -6,9 +6,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
-import 'package:ncart_eats/model/current_location.dart';
+import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
@@ -35,11 +36,6 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
         const Duration(seconds: 0), () => _fetchCurrentLocationInfo());
 
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void _fetchCurrentLocationInfo() async {
@@ -115,15 +111,6 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
                                 fontWeight: FontWeight.w500))))
               ])));
 
-  Widget _buildCircularIndicatorWidget(bool enabled) => enabled
-      ? const Center(
-          child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                  strokeWidth: 4, color: AppColors.themeColor)))
-      : Container();
-
   Widget _buildGoogleMapWidget() => GoogleMap(
       initialCameraPosition: const CameraPosition(
           target: LatLng(9.981636, 76.299881), zoom: 14.4746),
@@ -175,7 +162,7 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
         body: Stack(children: [
           _buildGoogleMapWidget(),
           if (selectedLocation!.name != null) _buildLocationNameWidget(),
-          _buildCircularIndicatorWidget(loaderEnabled),
+          GenericWidget.buildCircularProgressIndicator(loaderEnabled),
           if (!loaderEnabled) _buildGoogleMapMarkerWidget(),
           if (!loaderEnabled) _buildCurrentLocationButtonWidget(),
           if (!loaderEnabled) _buildPickLocationButtonWidget()

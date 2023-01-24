@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
+import 'package:ncart_eats/riverpod/service_providers/user_service.dart';
+import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/sign_up.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
@@ -13,14 +17,14 @@ import 'package:ncart_eats/widget/app_button.dart';
 import 'package:ncart_eats/widget/app_checkbox.dart';
 import 'package:ncart_eats/widget/app_phone_field.dart';
 
-class Login extends StatefulWidget {
+class Login extends ConsumerStatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  ConsumerState<Login> createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends ConsumerState<Login> {
   late bool termsAndConditionEnabled = true;
   late bool rememberMeEnabled = false;
   late TextEditingController phoneNumberFieldController;
@@ -39,14 +43,34 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
-  void _onSignInButtonTapped() {
+  void _onSignInButtonTapped() async {
     String phoneNumber = phoneNumberFieldController.text;
     if (phoneNumber.isEmpty || !Validator.validatePhoneNumber(phoneNumber)) {
       Utilities.showToastBar(S.of(context).phoneError, context);
       return;
     }
 
-    Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
+    hasUserExist(phoneNumber, (exist) {
+      if (exist) {
+        Utilities.navigateTo(
+            context, OtpVerification(phoneNumber: phoneNumber));
+      } else {
+        Utilities.navigateWithReplacement(
+            context, SignUp(phoneNumber: phoneNumber));
+      }
+    });
+  }
+
+  void hasUserExist(String phoneNumber, ValueChanged onSuccess) async {
+    try {
+      ref.read(loaderIndicatorProvider.notifier).show();
+      bool hasUserExist = await UserService.hasUserExist("+91$phoneNumber");
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      onSuccess(hasUserExist);
+    } catch (error) {
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      Utilities.showToastBar(S.of(context).signInError, context);
+    }
   }
 
   Widget _buildLogoImageWidget() => Center(child: Image.asset(AppIcons.logo));
@@ -102,7 +126,7 @@ class _LoginState extends State<Login> {
                             color: Colors.lightBlue))))
           ]));
 
-  Widget _buildBottomButtonWidget() => Padding(
+  Widget _buildBottomButtonWidget(bool enabled) => Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 50),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,13 +136,15 @@ class _LoginState extends State<Login> {
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 label: S.of(context).signUp,
                 type: ButtonType.secondary.toString(),
-                onTapped: () =>
-                    Utilities.navigateWithReplacement(context, const SignUp())),
+                onTapped: () => enabled
+                    ? null
+                    : Utilities.navigateWithReplacement(
+                        context, const SignUp())),
             AppButton(
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 label: S.of(context).signIn,
                 type: ButtonType.primary.toString(),
-                onTapped: _onSignInButtonTapped)
+                onTapped: () => enabled ? null : _onSignInButtonTapped())
           ]));
 
   Widget _buildContinueAsGuestWidget() => Center(
@@ -142,20 +168,25 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              _buildLogoImageWidget(),
-              _buildTitleTextWidget(),
-              _buildPhoneNumberFieldWidget(),
-              _buildRememberMeWidget(),
-              _buildTermsAndConditionWidget(),
-              _buildBottomButtonWidget(),
-              _buildContinueAsGuestWidget(),
-            ]));
+        body: Stack(children: [
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _buildLogoImageWidget(),
+                _buildTitleTextWidget(),
+                _buildPhoneNumberFieldWidget(),
+                _buildRememberMeWidget(),
+                _buildTermsAndConditionWidget(),
+                _buildBottomButtonWidget(loaderEnabled),
+                _buildContinueAsGuestWidget(),
+              ]),
+          GenericWidget.buildCircularProgressIndicator(loaderEnabled)
+        ]));
   }
 }

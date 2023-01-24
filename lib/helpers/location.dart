@@ -1,7 +1,7 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:ncart_eats/helpers/permission.dart';
-import 'package:ncart_eats/model/current_location.dart';
+import 'package:ncart_eats/model/current_location/current_location.dart';
 
 class Locations {
   static Future<CurrentLocation> getCurrentLocation() async {

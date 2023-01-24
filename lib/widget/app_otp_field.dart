@@ -20,10 +20,10 @@ class AppOtpField extends StatefulWidget {
 
   const AppOtpField({
     Key? key,
-    this.length = 4,
+    this.length = 6,
     this.controller,
     this.fieldWidth = 50,
-    this.spaceBetween = 25,
+    this.spaceBetween = 15,
     this.hasError = false,
     this.keyboardType = TextInputType.number,
     this.textCapitalization = TextCapitalization.none,
