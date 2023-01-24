@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/current_user/current_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,6 +13,7 @@ class SharedPreferenceHelper {
 
   // Keys
   final String _user = "user";
+  final String _location = "location";
 
   Future<void> deleteUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,6 +30,21 @@ class SharedPreferenceHelper {
     String? userJson = prefs.getString(_user);
     if (userJson != null && userJson.isNotEmpty) {
       return CurrentUser.fromJson(jsonDecode(userJson));
+    }
+
+    return null;
+  }
+
+  Future<void> setLocation(CurrentLocation location) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_location, json.encode(location));
+  }
+
+  Future<CurrentLocation?> getLocation() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? locationJson = prefs.getString(_location);
+    if (locationJson != null && locationJson.isNotEmpty) {
+      return CurrentLocation.fromJson(jsonDecode(locationJson));
     }
 
     return null;

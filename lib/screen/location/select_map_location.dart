@@ -8,11 +8,13 @@ import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
+import 'package:ncart_eats/helpers/shared_preference.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/screen/landing/home.dart';
 import 'package:ncart_eats/widget/app_button.dart';
 
 class SelectMapLocation extends ConsumerStatefulWidget {
@@ -57,6 +59,15 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
         tilt: 40.440717697143555,
         zoom: 19.0)));
 
+    ref.read(loaderIndicatorProvider.notifier).hide();
+  }
+
+  void _onSetLocationButtonTapped(VoidCallback onSuccess) async {
+    ref.read(loaderIndicatorProvider.notifier).show();
+    await SharedPreferenceHelper.shared.setLocation(selectedLocation!);
+    ref
+        .read(currentLocationProvider.notifier)
+        .setCurrentLocation(selectedLocation);
     ref.read(loaderIndicatorProvider.notifier).hide();
   }
 
@@ -151,7 +162,8 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
       child: AppButton(
           label: S.of(context).pickLocation,
           type: ButtonType.primary.toString(),
-          onTapped: () {}));
+          onTapped: () => _onSetLocationButtonTapped(
+              () => Utilities.navigateAndClearAll(context, const Home()))));
 
   @override
   Widget build(BuildContext context) {

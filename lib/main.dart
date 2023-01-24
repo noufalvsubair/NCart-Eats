@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ncart_eats/generated/l10n.dart';
-import 'package:ncart_eats/screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/landing/splash_screen.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -36,6 +36,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: [
           Locale('en'), // English
         ],
-        home: Login());
+        home: SplashScreen());
   }
 }

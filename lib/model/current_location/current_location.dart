@@ -8,8 +8,10 @@ class CurrentLocation {
   final String? name;
   final double? latitude;
   final double? longitude;
+  final String? type;
 
-  CurrentLocation({this.id, this.name, this.latitude, this.longitude});
+  CurrentLocation(
+      {this.id, this.name, this.latitude, this.longitude, this.type});
 
   factory CurrentLocation.fromJson(Map<String, dynamic> json) =>
       _$CurrentLocationFromJson(json);

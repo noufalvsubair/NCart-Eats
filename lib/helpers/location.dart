@@ -1,5 +1,6 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/helpers/permission.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 
@@ -31,7 +32,10 @@ class Locations {
     String address = createAddressFromPlaceMar(locations.first);
 
     return CurrentLocation(
-        name: address, latitude: latitude, longitude: longitude);
+        type: LocationType.other.toString(),
+        name: address,
+        latitude: latitude,
+        longitude: longitude);
   }
 
   static String createAddressFromPlaceMar(Placemark location) {
