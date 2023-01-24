@@ -14,7 +14,7 @@ class AppStyles {
           counterText: "");
 
   static InputDecoration fieldDecorationWithIcon(
-          BuildContext context, String hint, Icon? icon) =>
+          BuildContext context, String hint, Widget? icon) =>
       InputDecoration(
           hintText: hint,
           hintStyle: GoogleFonts.roboto(

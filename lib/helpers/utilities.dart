@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ncart_eats/constants/enum.dart';
+import 'package:ncart_eats/generated/l10n.dart';
 
 class Utilities {
   static showToastBar(String message, BuildContext context) {
@@ -43,5 +45,26 @@ class Utilities {
         context,
         MaterialPageRoute(builder: (context) => widget),
         (Route<dynamic> route) => false);
+  }
+
+  static IconData getCurrentLocationTypeIcon(String locationType) {
+    if (locationType == LocationType.home.toString()) {
+      return Icons.home_filled;
+    } else if (locationType == LocationType.work.toString()) {
+      return Icons.work_outlined;
+    } else {
+      return Icons.location_on_rounded;
+    }
+  }
+
+  static String getCurrentLocationType(
+      String locationType, BuildContext context) {
+    if (locationType == LocationType.home.toString()) {
+      return S.of(context).home;
+    } else if (locationType == LocationType.work.toString()) {
+      return S.of(context).work;
+    } else {
+      return S.of(context).other;
+    }
   }
 }
