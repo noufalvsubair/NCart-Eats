@@ -6,7 +6,7 @@ import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
-import 'package:ncart_eats/model/user/user.dart';
+import 'package:ncart_eats/model/current_user/current_user.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
@@ -75,7 +75,7 @@ class _SignUpState extends ConsumerState<SignUp> {
     }
 
     _addUserToDB(
-        User(
+        CurrentUser(
             firstName: firstName,
             lastName: lastName,
             mobile: "+91$phoneNumber",
@@ -85,7 +85,7 @@ class _SignUpState extends ConsumerState<SignUp> {
     });
   }
 
-  void _addUserToDB(User user, VoidCallback onSuccess) async {
+  void _addUserToDB(CurrentUser user, VoidCallback onSuccess) async {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       await UserService.addUserToDB(user);
