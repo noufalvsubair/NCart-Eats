@@ -15,7 +15,9 @@ import 'package:ncart_eats/widget/app_checkbox.dart';
 import 'package:ncart_eats/widget/app_phone_field.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  final String? phoneNumber;
+
+  const SignUp({Key? key, this.phoneNumber}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -32,6 +34,9 @@ class _SignUpState extends State<SignUp> {
     firstNameFieldController = TextEditingController();
     lastNameFieldController = TextEditingController();
     phoneNumberFieldController = TextEditingController();
+    if (widget.phoneNumber != null) {
+      phoneNumberFieldController.text = widget.phoneNumber!;
+    }
 
     super.initState();
   }
