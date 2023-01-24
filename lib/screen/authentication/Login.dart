@@ -50,7 +50,7 @@ class _LoginState extends ConsumerState<Login> {
       return;
     }
 
-    hasUserExist(phoneNumber, (exist) {
+    _hasUserExist(phoneNumber, (exist) {
       if (exist) {
         Utilities.navigateTo(
             context, OtpVerification(phoneNumber: phoneNumber));
@@ -61,7 +61,7 @@ class _LoginState extends ConsumerState<Login> {
     });
   }
 
-  void hasUserExist(String phoneNumber, ValueChanged onSuccess) async {
+  void _hasUserExist(String phoneNumber, ValueChanged onSuccess) async {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       bool hasUserExist = await UserService.hasUserExist("+91$phoneNumber");
@@ -147,7 +147,7 @@ class _LoginState extends ConsumerState<Login> {
                 onTapped: () => enabled ? null : _onSignInButtonTapped())
           ]));
 
-  Widget _buildContinueAsGuestWidget() => Center(
+  Widget _buildContinueAsGuestWidget(bool loaderEnabled) => Center(
       child: InkWell(
           onTap: () {},
           child: RichText(
@@ -184,7 +184,7 @@ class _LoginState extends ConsumerState<Login> {
                 _buildRememberMeWidget(),
                 _buildTermsAndConditionWidget(),
                 _buildBottomButtonWidget(loaderEnabled),
-                _buildContinueAsGuestWidget(),
+                _buildContinueAsGuestWidget(loaderEnabled),
               ]),
           GenericWidget.buildCircularProgressIndicator(loaderEnabled)
         ]));

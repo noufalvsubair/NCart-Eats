@@ -1,3 +1,3 @@
 class FBTable {
-  static const userTable = "user";
+  static const userTable = "users";
 }

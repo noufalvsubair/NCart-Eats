@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/helpers/validator.dart';
+import 'package:ncart_eats/model/user/user.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
+import 'package:ncart_eats/riverpod/service_providers/user_service.dart';
+import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/screen/authentication/Login.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
@@ -14,16 +19,16 @@ import 'package:ncart_eats/widget/app_button.dart';
 import 'package:ncart_eats/widget/app_checkbox.dart';
 import 'package:ncart_eats/widget/app_phone_field.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   final String? phoneNumber;
 
   const SignUp({Key? key, this.phoneNumber}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
   late TextEditingController firstNameFieldController;
   late TextEditingController lastNameFieldController;
   late TextEditingController phoneNumberFieldController;
@@ -69,7 +74,31 @@ class _SignUpState extends State<SignUp> {
       return;
     }
 
-    Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
+    _addUserToDB(
+        User(
+            firstName: firstName,
+            lastName: lastName,
+            mobile: "+91$phoneNumber",
+            hasAddressAdded: false,
+            hasTermAndConditionAgreed: termsAndConditionEnabled), () {
+      Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
+    });
+  }
+
+  void _addUserToDB(User user, VoidCallback onSuccess) async {
+    try {
+      ref.read(loaderIndicatorProvider.notifier).show();
+      await UserService.addUserToDB(user);
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      onSuccess();
+    } catch (e) {
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      if (e == 409) {
+        Utilities.showToastBar(S.of(context).alreadyRegisteredError, context);
+      } else {
+        Utilities.showToastBar(S.of(context).signUpError, context);
+      }
+    }
   }
 
   Widget _buildLogoImageWidget() => Padding(
@@ -143,7 +172,7 @@ class _SignUpState extends State<SignUp> {
                             color: Colors.lightBlue))))
           ]));
 
-  Widget _buildBottomButtonWidget() => Padding(
+  Widget _buildBottomButtonWidget(bool enabled) => Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 50),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -153,13 +182,15 @@ class _SignUpState extends State<SignUp> {
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 label: S.of(context).signIn,
                 type: ButtonType.secondary.toString(),
-                onTapped: () =>
-                    Utilities.navigateWithReplacement(context, const Login())),
+                onTapped: () => enabled
+                    ? null
+                    : Utilities.navigateWithReplacement(
+                        context, const Login())),
             AppButton(
                 width: (MediaQuery.of(context).size.width - 40) / 2,
                 label: S.of(context).signUp,
                 type: ButtonType.primary.toString(),
-                onTapped: _onSignUpButtonTapped)
+                onTapped: () => enabled ? null : _onSignUpButtonTapped())
           ]));
 
   Widget _buildContinueAsGuestWidget() => Center(
@@ -183,20 +214,25 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-              _buildLogoImageWidget(),
-              _buildTitleTextWidget(),
-              _buildUserInfoFieldWidget(),
-              _buildTermsAndConditionWidget(),
-              _buildBottomButtonWidget(),
-              _buildContinueAsGuestWidget(),
-              const SizedBox(height: 30)
-            ])));
+        body: Stack(children: [
+          SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                _buildLogoImageWidget(),
+                _buildTitleTextWidget(),
+                _buildUserInfoFieldWidget(),
+                _buildTermsAndConditionWidget(),
+                _buildBottomButtonWidget(loaderEnabled),
+                _buildContinueAsGuestWidget(),
+                const SizedBox(height: 30)
+              ])),
+          GenericWidget.buildCircularProgressIndicator(loaderEnabled)
+        ]));
   }
 }
