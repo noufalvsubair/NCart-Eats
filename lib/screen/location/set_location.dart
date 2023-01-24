@@ -5,11 +5,13 @@ import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
+import 'package:ncart_eats/helpers/shared_preference.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/screen/landing/home.dart';
 import 'package:ncart_eats/screen/location/select_map_location.dart';
 import 'package:ncart_eats/widget/app_button.dart';
 
@@ -21,11 +23,16 @@ class SetLocation extends ConsumerStatefulWidget {
 }
 
 class _SetLocationState extends ConsumerState<SetLocation> {
-  void _onUseCurrentLocationButtonTapped() async {
+  void _onUseCurrentLocationButtonTapped(VoidCallback onSuccess) async {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       CurrentLocation currentLocation = await Locations.getCurrentLocation();
+      await SharedPreferenceHelper.shared.setLocation(currentLocation);
       ref.read(loaderIndicatorProvider.notifier).hide();
+      ref
+          .read(currentLocationProvider.notifier)
+          .setCurrentLocation(currentLocation);
+      onSuccess();
     } catch (error) {
       ref.read(loaderIndicatorProvider.notifier).hide();
       Utilities.showToastBar(S.of(context).locationPermissionError, context);
@@ -63,7 +70,10 @@ class _SetLocationState extends ConsumerState<SetLocation> {
       label: S.of(context).useCurrentLocation,
       type: ButtonType.primary.toString(),
       icon: Icons.my_location,
-      onTapped: () => enabled ? null : _onUseCurrentLocationButtonTapped());
+      onTapped: () => enabled
+          ? null
+          : _onUseCurrentLocationButtonTapped(
+              () => Utilities.navigateAndClearAll(context, const Home())));
 
   Widget _buildSetFromMapButtonWidget(bool enabled) => AppButton(
       label: S.of(context).setFromMap,

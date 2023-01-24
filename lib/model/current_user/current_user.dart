@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'user.g.dart';
+part 'current_user.g.dart';
 
 @JsonSerializable()
-class User {
+class CurrentUser {
   final String? uid;
 
   @JsonKey(name: 'first_name')
@@ -19,7 +19,7 @@ class User {
   @JsonKey(name: 'has_terms_condition_agreed')
   final bool? hasTermAndConditionAgreed;
 
-  User(
+  CurrentUser(
       {this.uid,
       this.firstName,
       this.lastName,
@@ -27,7 +27,8 @@ class User {
       this.hasAddressAdded,
       this.hasTermAndConditionAgreed});
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory CurrentUser.fromJson(Map<String, dynamic> json) =>
+      _$CurrentUserFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() => _$CurrentUserToJson(this);
 }
