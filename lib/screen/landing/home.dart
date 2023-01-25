@@ -63,7 +63,7 @@ class _HomeState extends ConsumerState<Home> {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textLowEmphasisColor)))
+                          color: AppColors.textMedEmphasisColor)))
             ]));
   }
 
@@ -77,7 +77,9 @@ class _HomeState extends ConsumerState<Home> {
                 padding: const EdgeInsets.only(left: 3),
                 child: Text(Utilities.getCurrentLocationType(type, context),
                     style: GoogleFonts.encodeSans(
-                        fontSize: 14, fontWeight: FontWeight.bold))),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textHighestEmphasisColor))),
             Icon(Icons.arrow_drop_down,
                 size: 22, color: AppColors.backgroundOverlayDarkColor)
           ]);
@@ -102,8 +104,7 @@ class _HomeState extends ConsumerState<Home> {
                       height: 20,
                       width: 20,
                       child: Icon(Icons.search_rounded,
-                          size: 25,
-                          color: AppColors.backgroundOverlayLightColor))))));
+                          size: 25, color: AppColors.textLowEmphasisColor))))));
 
   @override
   Widget build(BuildContext context) {
