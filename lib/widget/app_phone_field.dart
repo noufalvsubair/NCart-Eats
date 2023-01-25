@@ -16,14 +16,14 @@ class AppPhoneField extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("🇮🇳", style: GoogleFonts.encodeSans(fontSize: 16)),
+          Text("🇮🇳", style: GoogleFonts.roboto(fontSize: 16)),
           Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text("+91",
                   style: GoogleFonts.roboto(
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.normalTextColor))),
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textHighEmphasisColor))),
           const Padding(
               padding: EdgeInsets.only(right: 10),
               child: Icon(Icons.arrow_drop_down_outlined,
@@ -33,7 +33,7 @@ class AppPhoneField extends StatelessWidget {
                   controller: fieldEditController,
                   keyboardType: TextInputType.number,
                   maxLength: 10,
-                  cursorColor: AppColors.themeColor,
+                  cursorColor: AppColors.primaryColor,
                   decoration:
                       AppStyles.fieldDecorations(context, S.of(context).phone)))
         ]);

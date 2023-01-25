@@ -141,14 +141,14 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
       preferredSize: const Size.fromHeight(50),
       child: AppBar(
           elevation: 0.0,
-          iconTheme: const IconThemeData(color: AppColors.normalTextColor),
+          iconTheme: IconThemeData(color: AppColors.textHighestEmphasisColor),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).otpVerification,
               style: GoogleFonts.roboto(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.normalTextColor))));
+                  color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildOTPDescriptionTextWidget() => Center(
           child: RichText(
@@ -157,14 +157,14 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: AppColors.transparentTextColor),
+                      color: AppColors.textLowEmphasisColor),
                   children: [
             TextSpan(
                 text: '+91${widget.phoneNumber}',
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
-                    color: AppColors.normalTextColor))
+                    color: AppColors.textHighEmphasisColor))
           ])));
 
   Widget _buildOtpFieldWidget() => Flexible(
@@ -181,8 +181,8 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
               fontWeight: FontWeight.bold,
               fontSize: 15,
               color: time == 0
-                  ? AppColors.normalTextColor
-                  : AppColors.transparentTextColor));
+                  ? AppColors.textHighEmphasisColor
+                  : AppColors.textLowEmphasisColor));
 
   Widget _buildResendButtonWidget() {
     int time = ref.watch(timerIndicatorProvider);
@@ -207,7 +207,7 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: AppColors.transparentTextColor)),
+                    color: AppColors.textLowEmphasisColor)),
             _buildResendButtonWidget()
           ]));
 

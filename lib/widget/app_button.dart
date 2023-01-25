@@ -4,10 +4,10 @@ import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 
 ButtonStyle primaryButtonStyle = TextButton.styleFrom(
-    backgroundColor: AppColors.themeColor, foregroundColor: Colors.white);
+    backgroundColor: AppColors.primaryColor, foregroundColor: Colors.white);
 
 ButtonStyle secondaryButtonStyle =
-    TextButton.styleFrom(foregroundColor: AppColors.themeColor);
+    TextButton.styleFrom(foregroundColor: AppColors.primaryColor);
 
 class AppButton extends StatelessWidget {
   final String label;
@@ -37,15 +37,15 @@ class AppButton extends StatelessWidget {
                   child: Icon(icon,
                       color: type == ButtonType.primary.toString()
                           ? Colors.white
-                          : AppColors.themeColor)),
+                          : AppColors.primaryColor)),
             Text(label,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.roboto(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: type == ButtonType.primary.toString()
-                        ? Colors.white
-                        : AppColors.themeColor))
+                        ? AppColors.backgroundPrimaryColor
+                        : AppColors.primaryColor))
           ]);
 
   Widget _buildTextButtonWidget() => TextButton(
@@ -62,8 +62,8 @@ class AppButton extends StatelessWidget {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0))),
         backgroundColor:
             MaterialStateProperty.resolveWith<Color>((states) => Colors.white),
-        side: MaterialStateProperty.resolveWith((states) =>
-            const BorderSide(color: AppColors.themeColor, width: 1)),
+        side: MaterialStateProperty.resolveWith(
+            (states) => BorderSide(color: AppColors.primaryColor, width: 1)),
       ),
       child: _buildButtonTextWidget());
 

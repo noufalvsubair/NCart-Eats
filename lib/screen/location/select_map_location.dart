@@ -99,25 +99,24 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
               color: Colors.white,
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                    color: AppColors.shadowColor,
-                    offset: Offset(0.0, 0.5), //(x,y)
+                    color: AppColors.backgroundOverlayLightColor,
+                    offset: const Offset(0.0, 0.5), //(x,y)
                     blurRadius: 3.0)
               ]),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Icon(Icons.location_on_sharp,
-                    color: AppColors.themeColor),
+                Icon(Icons.location_on_sharp, color: AppColors.primaryColor),
                 Flexible(
                     child: Padding(
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(selectedLocation!.name!,
                             overflow: TextOverflow.ellipsis,
                             style: GoogleFonts.openSans(
-                                color: AppColors.normalTextColor,
+                                color: AppColors.textHighestEmphasisColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500))))
               ])));
@@ -144,17 +143,17 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
           child: Container(
               width: 50,
               height: 50,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                        color: AppColors.shadowColor,
-                        offset: Offset(0.0, 1), //(x,y)
+                        color: AppColors.backgroundOverlayLightColor,
+                        offset: const Offset(0.0, 1), //(x,y)
                         blurRadius: 5.0)
                   ]),
-              child: const Icon(Icons.my_location,
-                  size: 25, color: AppColors.themeColor))));
+              child: Icon(Icons.my_location,
+                  size: 25, color: AppColors.primaryColor))));
 
   Widget _buildPickLocationButtonWidget() => Positioned(
       bottom: 10,

@@ -109,34 +109,36 @@ class _AppOtpFieldState extends State<AppOtpField> {
             keyboardType: widget.keyboardType,
             textCapitalization: widget.textCapitalization,
             textAlign: TextAlign.center,
-            style:
-                GoogleFonts.roboto(fontWeight: FontWeight.bold, fontSize: 14),
+            style: GoogleFonts.roboto(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: AppColors.textHighEmphasisColor),
             inputFormatters: widget.inputFormatter,
             maxLength: 1,
             focusNode: _focusNodes[index],
             obscureText: widget.obscureText,
-            cursorColor: AppColors.themeColor,
+            cursorColor: AppColors.primaryColor,
             decoration: InputDecoration(
               isDense: widget.isDense,
               filled: true,
-              fillColor: const Color(0xFFEEEEEE),
+              fillColor: AppColors.backgroundSecondaryColor,
               counterText: "",
               contentPadding: widget.contentPadding,
               border: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: AppColors.themeColor, width: 0.8),
+                      BorderSide(color: AppColors.primaryColor, width: 0.8),
                   borderRadius: BorderRadius.circular(5.0)),
               focusedBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: AppColors.themeColor, width: 0.8),
+                      BorderSide(color: AppColors.primaryColor, width: 0.8),
                   borderRadius: BorderRadius.circular(5.0)),
               enabledBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: AppColors.themeColor, width: 0.8),
+                      BorderSide(color: AppColors.primaryColor, width: 0.8),
                   borderRadius: BorderRadius.circular(5.0)),
               focusedErrorBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: AppColors.themeColor, width: 0.8),
+                      BorderSide(color: AppColors.primaryColor, width: 0.8),
                   borderRadius: BorderRadius.circular(5.0)),
             ),
             onChanged: (String str) {

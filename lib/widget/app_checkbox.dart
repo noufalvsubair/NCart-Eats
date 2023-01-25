@@ -19,13 +19,13 @@ class AppCheckbox extends StatelessWidget {
         children: [
           Checkbox(
               value: checked,
-              activeColor: AppColors.themeColor,
+              activeColor: AppColors.primaryColor,
               onChanged: (bool? checked) => onChanged!(checked)),
           Text(label!,
               style: GoogleFonts.roboto(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.normalTextColor))
+                  color: AppColors.textHighestEmphasisColor))
         ]);
   }
 }

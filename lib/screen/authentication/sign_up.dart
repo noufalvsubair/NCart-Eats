@@ -109,25 +109,25 @@ class _SignUpState extends ConsumerState<SignUp> {
       padding: const EdgeInsets.only(top: 15),
       child: Text(S.of(context).signUp.toUpperCase(),
           style: GoogleFonts.roboto(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)));
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: AppColors.textHighestEmphasisColor)));
 
   Widget _buildFirstNameFieldWidget() => TextField(
       controller: firstNameFieldController,
-      cursorColor: AppColors.themeColor,
+      cursorColor: AppColors.primaryColor,
       decoration: AppStyles.fieldDecorationWithIcon(
           context,
           S.of(context).firstName,
-          const Icon(Icons.account_circle,
-              color: AppColors.transparentTextColor)));
+          Icon(Icons.account_circle, color: AppColors.textLowEmphasisColor)));
 
   Widget _buildLastNameFieldWidget() => TextField(
       controller: lastNameFieldController,
-      cursorColor: AppColors.themeColor,
+      cursorColor: AppColors.primaryColor,
       decoration: AppStyles.fieldDecorationWithIcon(
           context,
           S.of(context).lastName,
-          const Icon(Icons.account_circle,
-              color: AppColors.transparentTextColor)));
+          Icon(Icons.account_circle, color: AppColors.textLowEmphasisColor)));
 
   Widget _buildUserInfoFieldWidget() => Container(
       margin: const EdgeInsets.only(top: 50, left: 15, right: 15),
@@ -135,17 +135,17 @@ class _SignUpState extends ConsumerState<SignUp> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Colors.white,
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-                color: AppColors.shadowColor,
-                offset: Offset(0.0, 0.5), //(x,y)
+                color: AppColors.backgroundOverlayLightColor,
+                offset: const Offset(0.0, 0.5), //(x,y)
                 blurRadius: 3.0)
           ]),
       child: Column(children: [
         _buildFirstNameFieldWidget(),
-        const Divider(height: 0.3, color: AppColors.transparentTextColor),
+        Divider(height: 0.3, color: AppColors.backgroundSecondaryColor),
         _buildLastNameFieldWidget(),
-        const Divider(height: 0.3, color: AppColors.transparentTextColor),
+        Divider(height: 0.3, color: AppColors.backgroundSecondaryColor),
         AppPhoneField(fieldEditController: phoneNumberFieldController)
       ]));
 
@@ -169,7 +169,7 @@ class _SignUpState extends ConsumerState<SignUp> {
                         style: GoogleFonts.roboto(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.lightBlue))))
+                            color: AppColors.textLinkEmphasisColor))))
           ]));
 
   Widget _buildBottomButtonWidget(bool enabled) => Padding(
@@ -202,14 +202,14 @@ class _SignUpState extends ConsumerState<SignUp> {
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: AppColors.transparentTextColor),
+                      color: AppColors.textLowEmphasisColor),
                   children: [
                 TextSpan(
                     text: S.of(context).guest,
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: AppColors.normalTextColor))
+                        color: AppColors.textHighestEmphasisColor))
               ]))));
 
   @override

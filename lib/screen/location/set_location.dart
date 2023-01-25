@@ -46,14 +46,14 @@ class _SetLocationState extends ConsumerState<SetLocation> {
       preferredSize: const Size.fromHeight(50),
       child: AppBar(
           elevation: 0.0,
-          iconTheme: const IconThemeData(color: AppColors.normalTextColor),
+          iconTheme: IconThemeData(color: AppColors.textHighestEmphasisColor),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).setLocation,
               style: GoogleFonts.roboto(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.normalTextColor))));
+                  color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildEmptyIconWidget() =>
       Center(child: Image.asset(AppIcons.emptyAddress));
@@ -64,7 +64,7 @@ class _SetLocationState extends ConsumerState<SetLocation> {
           style: GoogleFonts.roboto(
               fontWeight: FontWeight.w500,
               fontSize: 14,
-              color: AppColors.transparentTextColor)));
+              color: AppColors.textLowEmphasisColor)));
 
   Widget _buildUseCurrentLocationButtonWidget(bool enabled) => AppButton(
       label: S.of(context).useCurrentLocation,

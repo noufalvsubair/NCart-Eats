@@ -79,7 +79,9 @@ class _LoginState extends ConsumerState<Login> {
       padding: const EdgeInsets.only(top: 15),
       child: Text(S.of(context).signIn.toUpperCase(),
           style: GoogleFonts.roboto(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black)));
+              fontSize: 20,
+              fontWeight: FontWeight.w900,
+              color: AppColors.textHighestEmphasisColor)));
 
   Widget _buildPhoneNumberFieldWidget() => Container(
       margin: const EdgeInsets.only(top: 50, left: 15, right: 15),
@@ -87,10 +89,10 @@ class _LoginState extends ConsumerState<Login> {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           color: Colors.white,
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-                color: AppColors.shadowColor,
-                offset: Offset(0.0, 0.5), //(x,y)
+                color: AppColors.backgroundOverlayLightColor,
+                offset: const Offset(0.0, 0.5), //(x,y)
                 blurRadius: 3.0)
           ]),
       child: AppPhoneField(fieldEditController: phoneNumberFieldController));
@@ -123,7 +125,7 @@ class _LoginState extends ConsumerState<Login> {
                         style: GoogleFonts.roboto(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Colors.lightBlue))))
+                            color: AppColors.textLinkEmphasisColor))))
           ]));
 
   Widget _buildBottomButtonWidget(bool enabled) => Padding(
@@ -156,14 +158,14 @@ class _LoginState extends ConsumerState<Login> {
                   style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: AppColors.transparentTextColor),
+                      color: AppColors.textLowEmphasisColor),
                   children: [
                 TextSpan(
                     text: S.of(context).guest,
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: AppColors.normalTextColor))
+                        color: AppColors.textHighestEmphasisColor))
               ]))));
 
   @override

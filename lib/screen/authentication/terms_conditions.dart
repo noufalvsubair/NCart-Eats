@@ -15,14 +15,14 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
       preferredSize: const Size.fromHeight(50),
       child: AppBar(
           elevation: 0.0,
-          iconTheme: const IconThemeData(color: AppColors.normalTextColor),
+          iconTheme: IconThemeData(color: AppColors.backgroundOverlayDarkColor),
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).termAndCondition,
               style: GoogleFonts.roboto(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.normalTextColor))));
+                  color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildTermsAndConditionItemWidget(String title, String description) =>
       Column(
@@ -33,13 +33,17 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
               Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   child: Text(title,
-                      style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.bold, fontSize: 16))),
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: AppColors.textHighestEmphasisColor))),
             Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                 child: Text(description,
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.normal, fontSize: 13))),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 13,
+                        color: AppColors.textHighEmphasisColor))),
           ]);
 
   @override
