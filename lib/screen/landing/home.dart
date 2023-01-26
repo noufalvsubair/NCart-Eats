@@ -6,10 +6,12 @@ import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/offer/offer.dart';
+import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
+import 'package:ncart_eats/widget/app_shop_item.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -30,6 +32,16 @@ class _HomeState extends ConsumerState<Home> {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       await ref.read(offerProvider.notifier).fetchOffers();
+      _fetchShops();
+    } catch (err) {
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      Utilities.showToastBar(err.toString(), context);
+    }
+  }
+
+  void _fetchShops() async {
+    try {
+      await ref.read(shopProvider.notifier).fetchShops();
       ref.read(loaderIndicatorProvider.notifier).hide();
     } catch (err) {
       ref.read(loaderIndicatorProvider.notifier).hide();
@@ -121,6 +133,12 @@ class _HomeState extends ConsumerState<Home> {
                       child: Icon(Icons.search_rounded,
                           size: 25, color: AppColors.textLowEmphasisColor))))));
 
+  Widget _buildCircularProgressWidget() {
+    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+
+    return GenericWidget.buildCircularProgressIndicator(loaderEnabled);
+  }
+
   Widget _buildOfferCarouselWidget() {
     List<Offer> offers = ref.watch(offerProvider);
 
@@ -131,10 +149,26 @@ class _HomeState extends ConsumerState<Home> {
         : Container();
   }
 
-  Widget _buildCircularProgressWidget() {
-    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+  Widget _buildShopTitleTextWidget() => Padding(
+      padding: const EdgeInsets.only(left: 15, top: 30),
+      child: Text(S.of(context).restaurantsToExplore,
+          style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
+              color: AppColors.textHighestEmphasisColor)));
 
-    return GenericWidget.buildCircularProgressIndicator(loaderEnabled);
+  Widget _buildShopListWidget() {
+    List<Shop> shops = ref.watch(shopProvider);
+
+    return ListView.builder(
+        itemCount: shops.length,
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
+        itemBuilder: (BuildContext context, int index) => AppShopItem(
+            shop: shops[index],
+            onItemTapped: () {},
+            onFavouriteIconTapped: () {}));
   }
 
   @override
@@ -147,10 +181,14 @@ class _HomeState extends ConsumerState<Home> {
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) =>
                       _buildExpandableAppBarWidget(),
-              body: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [_buildOfferCarouselWidget()])),
+              body: ListView(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildOfferCarouselWidget(),
+                    _buildShopTitleTextWidget(),
+                    _buildShopListWidget()
+                  ])),
           _buildCircularProgressWidget()
         ]));
   }

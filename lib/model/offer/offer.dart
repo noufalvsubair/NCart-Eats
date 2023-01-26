@@ -10,7 +10,7 @@ class Offer {
   final String? type;
 
   @JsonKey(name: 'offer_id')
-  final String? offerID;
+  final int? offerID;
 
   @JsonKey(name: 'offer_url')
   final String? offerURL;

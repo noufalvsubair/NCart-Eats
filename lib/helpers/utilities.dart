@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:ncart_eats/constants/enum.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 
@@ -65,6 +66,16 @@ class Utilities {
       return S.of(context).work;
     } else {
       return S.of(context).other;
+    }
+  }
+
+  static String viewCountFormatter(int number) {
+    if (number >= 1000) {
+      return "${NumberFormat.compact().format(number)}+";
+    } else if (number >= 100) {
+      return "${number ~/ 100}00+";
+    } else {
+      return "$number";
     }
   }
 }
