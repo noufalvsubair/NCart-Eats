@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
-import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
@@ -21,19 +20,6 @@ class AppShopItem extends StatelessWidget {
       required this.onItemTapped,
       required this.onFavouriteIconTapped})
       : super(key: key);
-
-  String getRatingAndReview() {
-    String embeddedString = "";
-    if (shop.rating! > 0) {
-      embeddedString = "${shop.rating}";
-    }
-
-    if (shop.reviewCount! > 0) {
-      embeddedString += " (${Utilities.viewCountFormatter(shop.reviewCount!)})";
-    }
-
-    return embeddedString;
-  }
 
   Widget _buildShopImageWidget() => SizedBox(
       width: 110,
@@ -56,7 +42,7 @@ class AppShopItem extends StatelessWidget {
             Icon(Icons.stars, size: 20, color: AppColors.positiveColor),
             Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(getRatingAndReview(),
+                child: Text(shop.getRatingAndReview(),
                     style: GoogleFonts.roboto(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,

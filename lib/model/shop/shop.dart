@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:ncart_eats/helpers/utilities.dart';
 
 part 'shop.g.dart';
 
@@ -47,4 +48,17 @@ class Shop {
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 
   Map<String, dynamic> toJson() => _$ShopToJson(this);
+
+  String getRatingAndReview() {
+    String embeddedString = "";
+    if (rating! > 0) {
+      embeddedString = "$rating";
+    }
+
+    if (reviewCount! > 0) {
+      embeddedString += " (${Utilities.viewCountFormatter(reviewCount!)})";
+    }
+
+    return embeddedString;
+  }
 }
