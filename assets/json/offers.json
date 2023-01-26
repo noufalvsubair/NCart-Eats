@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "image": "https://firebasestorage.googleapis.com/v0/b/ncart-eats.appspot.com/o/dominos_offer.jpg?alt=media&token=5d87c185-c17f-444c-81c2-5523ee430dbb",
+    "type": "restaurant",
+    "offer_id": "",
+    "offer_url": ""
+  },
+  {
+    "id": 2,
+    "image": "https://firebasestorage.googleapis.com/v0/b/ncart-eats.appspot.com/o/kfc_offer.jpg?alt=media&token=8cea4710-0886-4fc8-be73-06f223e492bd",
+    "type": "restaurant",
+    "offer_id": "",
+    "offer_url": ""
+  },
+  {
+    "id": 3,
+    "image": "https://firebasestorage.googleapis.com/v0/b/ncart-eats.appspot.com/o/pizza%20hut%20offer.png?alt=media&token=2fdc1ccd-92da-49f3-a5f1-a63de7161198",
+    "type": "restaurant",
+    "offer_id": "",
+    "offer_url": ""
+  },
+  {
+    "id": 4,
+    "image": "https://firebasestorage.googleapis.com/v0/b/ncart-eats.appspot.com/o/subway%20offer.jpg?alt=media&token=0c7b4c34-9b47-491f-a0f2-891644b6eb64",
+    "type": "restaurant",
+    "offer_id": "",
+    "offer_url": ""
+  },
+  {
+    "id": 5,
+    "image": "https://firebasestorage.googleapis.com/v0/b/ncart-eats.appspot.com/o/burger%20king%20offer.jpg?alt=media&token=827c3fc1-2a55-4311-885f-2ebb0c569a37",
+    "type": "restaurant",
+    "offer_id": "",
+    "offer_url": ""
+  }
+]

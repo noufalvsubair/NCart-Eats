@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
+import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
+import 'package:ncart_eats/model/offer/offer.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/widget/app_image_carousel.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -16,11 +19,27 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
-  late bool locationHeaderEnabled = true;
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () => _fetchOffers());
+
+    super.initState();
+  }
+
+  void _fetchOffers() async {
+    try {
+      ref.read(loaderIndicatorProvider.notifier).show();
+      await ref.read(offerProvider.notifier).fetchOffers();
+      ref.read(loaderIndicatorProvider.notifier).hide();
+    } catch (err) {
+      ref.read(loaderIndicatorProvider.notifier).hide();
+      Utilities.showToastBar(err.toString(), context);
+    }
+  }
 
   List<Widget> _buildExpandableAppBarWidget() => <Widget>[
         SliverAppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.backgroundPrimaryColor,
             expandedHeight: 130,
             floating: true,
             pinned: true,
@@ -37,14 +56,10 @@ class _HomeState extends ConsumerState<Home> {
             bottom: _buildSearchBarWidget())
       ];
 
-  Widget? _buildAppBarHeaderViewWidget() => locationHeaderEnabled
-      ? Container(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).viewPadding.top + 12,
-              right: 8,
-              left: 12),
-          child: _buildHeaderLocationViewWidget())
-      : Container();
+  Widget? _buildAppBarHeaderViewWidget() => Container(
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).viewPadding.top + 12, right: 8, left: 12),
+      child: _buildHeaderLocationViewWidget());
 
   Widget _buildHeaderLocationViewWidget() {
     CurrentLocation? currentLocation = ref.watch(currentLocationProvider);
@@ -106,15 +121,37 @@ class _HomeState extends ConsumerState<Home> {
                       child: Icon(Icons.search_rounded,
                           size: 25, color: AppColors.textLowEmphasisColor))))));
 
+  Widget _buildOfferCarouselWidget() {
+    List<Offer> offers = ref.watch(offerProvider);
+
+    return offers.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: AppImageCarousel(offers: offers))
+        : Container();
+  }
+
+  Widget _buildCircularProgressWidget() {
+    bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+
+    return GenericWidget.buildCircularProgressIndicator(loaderEnabled);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) =>
-                    _buildExpandableAppBarWidget(),
-            body: const Center(child: Text('Sample Text'))));
+        backgroundColor: AppColors.backgroundPrimaryColor,
+        body: Stack(children: [
+          NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) =>
+                      _buildExpandableAppBarWidget(),
+              body: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [_buildOfferCarouselWidget()])),
+          _buildCircularProgressWidget()
+        ]));
   }
 }
