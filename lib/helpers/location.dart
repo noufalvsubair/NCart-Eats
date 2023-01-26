@@ -53,4 +53,15 @@ class Locations {
 
   static String appendComaToString(String? text) =>
       text!.isNotEmpty ? "$text, " : "";
+
+  static String calculateDistanceByLatLong(
+      double? startLocationLat,
+      double? startLocationLong,
+      double endLocationLat,
+      double endLocationLong) {
+    double distance = Geolocator.distanceBetween(
+        startLocationLat!, startLocationLong!, endLocationLat, endLocationLong);
+
+    return "${(distance / 1000).toStringAsFixed(1)} km";
+  }
 }

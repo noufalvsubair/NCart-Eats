@@ -51,5 +51,11 @@
   "signInError": "Unable to sign in. Please try again later..",
   "signUpError": "Unable to sign up. Please try again later..",
   "alreadyRegisteredError": "You are already registered. Please use login to access the application.",
-  "otpVerificationError": "Unable to verify the verification code. Please try again later"
+  "otpVerificationError": "Unable to verify the verification code. Please try again later",
+  "home": "Home",
+  "work": "Work",
+  "other": "Others",
+  "globalSearch": "Search for restaurant, item or more",
+  "restaurantsToExplore": "Restaurant To Explore",
+  "freeDelivery": "Free Delivery"
 }
