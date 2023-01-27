@@ -62,7 +62,7 @@ class AppShopItem extends StatelessWidget {
             Icon(Icons.stars, size: 20, color: AppColors.positiveColor),
             Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(shop.ratingAndReviewCount(),
+                child: Text(shop.ratingAndReviewCount,
                     style: GoogleFonts.roboto(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -70,8 +70,7 @@ class AppShopItem extends StatelessWidget {
             if (shop.deliveryTime != null)
               _buildDotSeparatorWidget(AppColors.textHighestEmphasisColor),
             if (shop.deliveryTime != null)
-              Text(
-                  "${Duration(milliseconds: shop.deliveryTime!.toInt()).inMinutes} ${S.of(context).minutes}",
+              Text(shop.timeDuration,
                   style: GoogleFonts.roboto(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

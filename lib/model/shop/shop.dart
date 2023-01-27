@@ -51,16 +51,11 @@ class Shop {
 
   Map<String, dynamic> toJson() => _$ShopToJson(this);
 
-  String ratingAndReviewCount() {
-    String embeddedString = "";
-    if (rating! > 0) {
-      embeddedString = "$rating";
-    }
+  get ratingAndReviewCount =>
+      "${rating! > 0 ? rating : ""} ${reviewCount! > 0 ? " "
+          "(${Utilities.viewCountFormatter(reviewCount!)})" : ""}";
 
-    if (reviewCount! > 0) {
-      embeddedString += " (${Utilities.viewCountFormatter(reviewCount!)})";
-    }
-
-    return embeddedString;
-  }
+  get timeDuration => deliveryTime != null
+      ? "${Duration(seconds: deliveryTime!.toInt()).inMinutes} mins"
+      : "";
 }
