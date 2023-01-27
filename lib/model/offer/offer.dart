@@ -5,12 +5,12 @@ part 'offer.g.dart';
 
 @JsonSerializable()
 class Offer {
-  final int? id;
+  final String? id;
   final String? image;
   final String? type;
 
   @JsonKey(name: 'offer_id')
-  final int? offerID;
+  final String? offerID;
 
   @JsonKey(name: 'offer_url')
   final String? offerURL;

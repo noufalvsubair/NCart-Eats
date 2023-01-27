@@ -10,6 +10,8 @@ import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/screen/location/set_location.dart';
+import 'package:ncart_eats/screen/menu/profile.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
 import 'package:ncart_eats/widget/app_shop_item.dart';
 
@@ -59,7 +61,8 @@ class _HomeState extends ConsumerState<Home> {
               Padding(
                   padding: const EdgeInsets.only(right: 10, top: 10),
                   child: InkWell(
-                      onTap: () {},
+                      onTap: () =>
+                          Utilities.navigateTo(context, const Profile()),
                       child: const Icon(Icons.account_circle,
                           color: Colors.blueGrey, size: 40)))
             ],
@@ -77,7 +80,7 @@ class _HomeState extends ConsumerState<Home> {
     CurrentLocation? currentLocation = ref.watch(currentLocationProvider);
 
     return InkWell(
-        onTap: () {},
+        onTap: () => Utilities.navigateTo(context, const SetLocation()),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,30 +152,34 @@ class _HomeState extends ConsumerState<Home> {
         : Container();
   }
 
-  Widget _buildShopTitleTextWidget() => Padding(
+  Widget _buildShopTitleTextWidget(String title) => Padding(
       padding: const EdgeInsets.only(left: 15, top: 30),
-      child: Text(S.of(context).restaurantsToExplore,
+      child: Text(title,
           style: GoogleFonts.roboto(
               fontWeight: FontWeight.w600,
               fontSize: 16,
               color: AppColors.textHighestEmphasisColor)));
 
-  Widget _buildShopListWidget() {
-    List<Shop> shops = ref.watch(shopProvider);
-
+  Widget _buildOpenedShopListWidget(List<Shop> openedShops) {
     return ListView.builder(
-        itemCount: shops.length,
+        itemCount: openedShops.length,
         shrinkWrap: true,
         padding: EdgeInsets.zero,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) => AppShopItem(
-            shop: shops[index],
+            shop: openedShops[index],
             onItemTapped: () {},
             onFavouriteIconTapped: () {}));
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Shop> allShops = ref.watch(shopProvider);
+    List<Shop> openedShops =
+        allShops.where((Shop shop) => !shop.hasClosed).toList();
+    List<Shop> closedShops =
+        allShops.where((Shop shop) => shop.hasClosed).toList();
+
     return Scaffold(
         backgroundColor: AppColors.backgroundPrimaryColor,
         body: Stack(children: [
@@ -185,9 +192,17 @@ class _HomeState extends ConsumerState<Home> {
                   padding: const EdgeInsets.only(bottom: 20),
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    _buildOfferCarouselWidget(),
-                    _buildShopTitleTextWidget(),
-                    _buildShopListWidget()
+                    if (openedShops.isNotEmpty) _buildOfferCarouselWidget(),
+                    if (openedShops.isNotEmpty)
+                      _buildShopTitleTextWidget(
+                          S.of(context).restaurantsToExplore),
+                    if (openedShops.isNotEmpty)
+                      _buildOpenedShopListWidget(openedShops),
+                    if (closedShops.isNotEmpty)
+                      _buildShopTitleTextWidget(
+                          S.of(context).temporarilyClosed),
+                    if (closedShops.isNotEmpty)
+                      _buildOpenedShopListWidget(closedShops)
                   ])),
           _buildCircularProgressWidget()
         ]));

@@ -19,16 +19,26 @@ class CurrentUser {
   @JsonKey(name: 'has_terms_condition_agreed')
   final bool? hasTermAndConditionAgreed;
 
+  @JsonKey(name: 'created_at')
+  final String? createdAt;
+
+  @JsonKey(name: 'updated_at')
+  final String? updatedAt;
+
   CurrentUser(
       {this.uid,
       this.firstName,
       this.lastName,
       this.mobile,
       this.hasAddressAdded,
-      this.hasTermAndConditionAgreed});
+      this.hasTermAndConditionAgreed,
+      this.createdAt,
+      this.updatedAt});
 
   factory CurrentUser.fromJson(Map<String, dynamic> json) =>
       _$CurrentUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$CurrentUserToJson(this);
+
+  get fullName => "${firstName!} ${lastName!}";
 }

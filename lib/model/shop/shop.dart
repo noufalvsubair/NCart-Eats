@@ -5,27 +5,29 @@ part 'shop.g.dart';
 
 @JsonSerializable()
 class Shop {
-  final int? id;
+  final String? id;
   final String? name;
   final List<String>? cuisines;
   final String? street;
   final String? landmark;
   final String? location;
-  final String? latitude;
-  final String? longitude;
+  final double? latitude;
+  final double? longitude;
   @JsonKey(name: 'open_time')
-  final String? openTime;
+  final double? openTime;
   @JsonKey(name: 'close_time')
-  final String? closeTime;
+  final double? closeTime;
   final double? rating;
   @JsonKey(name: 'review_count')
   final int? reviewCount;
   @JsonKey(name: 'delivery_time')
-  final String? deliveryTime;
+  final double? deliveryTime;
   final String? logo;
   final String? image;
   @JsonKey(name: 'has_free_delivery', defaultValue: false)
   final bool? hasFreeDelivery;
+
+  late bool hasClosed;
 
   Shop(
       {this.id,
@@ -49,7 +51,7 @@ class Shop {
 
   Map<String, dynamic> toJson() => _$ShopToJson(this);
 
-  String getRatingAndReview() {
+  String ratingAndReviewCount() {
     String embeddedString = "";
     if (rating! > 0) {
       embeddedString = "$rating";

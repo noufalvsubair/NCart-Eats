@@ -57,5 +57,10 @@
   "other": "Others",
   "globalSearch": "Search for restaurant, item or more",
   "restaurantsToExplore": "Restaurant To Explore",
-  "freeDelivery": "Free Delivery"
+  "temporarilyClosed": "Temporarily Closed",
+  "closed": "Closed",
+  "minutes": "Mins",
+  "openMessage": "Opens tomorrow at {time}",
+  "freeDelivery": "Free Delivery",
+  "profile": "Profile"
 }

@@ -80,6 +80,8 @@ class _SignUpState extends ConsumerState<SignUp> {
             lastName: lastName,
             mobile: "+91$phoneNumber",
             hasAddressAdded: false,
+            createdAt: DateTime.now().toString(),
+            updatedAt: DateTime.now().toString(),
             hasTermAndConditionAgreed: termsAndConditionEnabled), () {
       Utilities.navigateTo(context, OtpVerification(phoneNumber: phoneNumber));
     });

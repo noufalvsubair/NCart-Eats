@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
@@ -21,10 +22,29 @@ class AppShopItem extends StatelessWidget {
       required this.onFavouriteIconTapped})
       : super(key: key);
 
-  Widget _buildShopImageWidget() => SizedBox(
-      width: 110,
-      height: 125,
-      child: GenericWidget.buildCachedNetworkImage(shop.image!, 15));
+  Widget _buildShopImageWidget(BuildContext context) => Stack(children: [
+        SizedBox(
+            width: 110,
+            height: 125,
+            child: GenericWidget.buildCachedNetworkImage(shop.image!, 15)),
+        if (shop.hasClosed)
+          Container(
+              width: 110,
+              height: 125,
+              foregroundDecoration: BoxDecoration(
+                  color: Colors.black,
+                  backgroundBlendMode: BlendMode.saturation,
+                  borderRadius: BorderRadius.circular(15))),
+        if (shop.hasClosed)
+          Positioned(
+              bottom: 5,
+              left: 5,
+              child: Text(S.of(context).closed.toUpperCase(),
+                  style: GoogleFonts.roboto(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.backgroundPrimaryColor)))
+      ]);
 
   Widget _buildDotSeparatorWidget(Color dotColor) => Padding(
       padding: const EdgeInsets.only(left: 6, right: 5),
@@ -33,7 +53,7 @@ class AppShopItem extends StatelessWidget {
           height: 4,
           decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor)));
 
-  Widget _buildRatingAndTimeViewWidget() => Padding(
+  Widget _buildRatingAndTimeViewWidget(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 5),
       child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -42,15 +62,16 @@ class AppShopItem extends StatelessWidget {
             Icon(Icons.stars, size: 20, color: AppColors.positiveColor),
             Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(shop.getRatingAndReview(),
+                child: Text(shop.ratingAndReviewCount(),
                     style: GoogleFonts.roboto(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textHighestEmphasisColor))),
-            if (shop.deliveryTime != null && shop.deliveryTime!.isNotEmpty)
+            if (shop.deliveryTime != null)
               _buildDotSeparatorWidget(AppColors.textHighestEmphasisColor),
-            if (shop.deliveryTime != null && shop.deliveryTime!.isNotEmpty)
-              Text(shop.deliveryTime!,
+            if (shop.deliveryTime != null)
+              Text(
+                  "${Duration(milliseconds: shop.deliveryTime!.toInt()).inMinutes} ${S.of(context).minutes}",
                   style: GoogleFonts.roboto(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -60,15 +81,9 @@ class AppShopItem extends StatelessWidget {
   Widget _buildLocationAndDistanceWidget() =>
       Consumer(builder: (_, WidgetRef ref, __) {
         CurrentLocation? currentLocation = ref.watch(currentLocationProvider);
-        String distance = (shop.latitude != null &&
-                shop.latitude!.isNotEmpty &&
-                shop.longitude != null &&
-                shop.longitude!.isNotEmpty)
-            ? Locations.calculateDistanceByLatLong(
-                currentLocation?.latitude,
-                currentLocation?.longitude,
-                double.parse(shop.latitude!),
-                double.parse(shop.longitude!))
+        String distance = (shop.latitude != null && shop.longitude != null)
+            ? Locations.calculateDistanceByLatLong(currentLocation?.latitude,
+                currentLocation?.longitude, shop.latitude!, shop.longitude!)
             : "";
 
         return Padding(
@@ -110,6 +125,16 @@ class AppShopItem extends StatelessWidget {
                         color: AppColors.textLowEmphasisColor)))
           ]));
 
+  Widget _buildTomorrowOpenTimeTextWidget(BuildContext context) => Padding(
+      padding: const EdgeInsets.only(top: 3),
+      child: Text(
+          S.of(context).openMessage(DateFormat.jm().format(
+              DateTime.fromMillisecondsSinceEpoch(shop.openTime!.toInt()))),
+          style: GoogleFonts.roboto(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textMedEmphasisColor)));
+
   Widget _buildShopInfoViewWidget(BuildContext context) => Flexible(
       flex: 1,
       child: Container(
@@ -123,7 +148,7 @@ class AppShopItem extends StatelessWidget {
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textHighestEmphasisColor)),
-                _buildRatingAndTimeViewWidget(),
+                _buildRatingAndTimeViewWidget(context),
                 if (shop.cuisines != null && shop.cuisines!.isNotEmpty)
                   Padding(
                       padding: const EdgeInsets.only(top: 5),
@@ -135,7 +160,9 @@ class AppShopItem extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: AppColors.textMedEmphasisColor))),
                 _buildLocationAndDistanceWidget(),
-                if (shop.hasFreeDelivery!) _buildFreeDeliveryViewWidget(context)
+                if (shop.hasFreeDelivery! && !shop.hasClosed)
+                  _buildFreeDeliveryViewWidget(context),
+                if (shop.hasClosed) _buildTomorrowOpenTimeTextWidget(context)
               ])));
 
   @override
@@ -146,7 +173,7 @@ class AppShopItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildShopImageWidget(),
+              _buildShopImageWidget(context),
               _buildShopInfoViewWidget(context)
             ]));
   }
