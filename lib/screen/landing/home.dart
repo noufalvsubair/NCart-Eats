@@ -176,9 +176,9 @@ class _HomeState extends ConsumerState<Home> {
   Widget build(BuildContext context) {
     List<Shop> allShops = ref.watch(shopProvider);
     List<Shop> openedShops =
-        allShops.where((Shop shop) => !shop.hasClosed).toList();
+        allShops.where((Shop shop) => !shop.hasClosed!).toList();
     List<Shop> closedShops =
-        allShops.where((Shop shop) => shop.hasClosed).toList();
+        allShops.where((Shop shop) => shop.hasClosed!).toList();
 
     return Scaffold(
         backgroundColor: AppColors.backgroundPrimaryColor,

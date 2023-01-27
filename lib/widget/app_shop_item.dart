@@ -27,7 +27,7 @@ class AppShopItem extends StatelessWidget {
             width: 110,
             height: 125,
             child: GenericWidget.buildCachedNetworkImage(shop.image!, 15)),
-        if (shop.hasClosed)
+        if (shop.hasClosed!)
           Container(
               width: 110,
               height: 125,
@@ -35,7 +35,7 @@ class AppShopItem extends StatelessWidget {
                   color: Colors.black,
                   backgroundBlendMode: BlendMode.saturation,
                   borderRadius: BorderRadius.circular(15))),
-        if (shop.hasClosed)
+        if (shop.hasClosed!)
           Positioned(
               bottom: 5,
               left: 5,
@@ -127,8 +127,8 @@ class AppShopItem extends StatelessWidget {
   Widget _buildTomorrowOpenTimeTextWidget(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 3),
       child: Text(
-          S.of(context).openMessage(DateFormat.jm().format(
-              DateTime.fromMillisecondsSinceEpoch(shop.openTime!.toInt()))),
+          S.of(context).openMessage(
+              DateFormat.jm().format(DateTime.fromMillisecondsSinceEpoch(0))),
           style: GoogleFonts.roboto(
               fontSize: 13,
               fontWeight: FontWeight.w500,
@@ -159,9 +159,9 @@ class AppShopItem extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               color: AppColors.textMedEmphasisColor))),
                 _buildLocationAndDistanceWidget(),
-                if (shop.hasFreeDelivery! && !shop.hasClosed)
+                if (shop.hasFreeDelivery! && !shop.hasClosed!)
                   _buildFreeDeliveryViewWidget(context),
-                if (shop.hasClosed) _buildTomorrowOpenTimeTextWidget(context)
+                if (shop.hasClosed!) _buildTomorrowOpenTimeTextWidget(context)
               ])));
 
   @override

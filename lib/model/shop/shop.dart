@@ -14,9 +14,9 @@ class Shop {
   final double? latitude;
   final double? longitude;
   @JsonKey(name: 'open_time')
-  final double? openTime;
+  final String? openTime;
   @JsonKey(name: 'close_time')
-  final double? closeTime;
+  final String? closeTime;
   final double? rating;
   @JsonKey(name: 'review_count')
   final int? reviewCount;
@@ -26,8 +26,7 @@ class Shop {
   final String? image;
   @JsonKey(name: 'has_free_delivery', defaultValue: false)
   final bool? hasFreeDelivery;
-
-  late bool hasClosed;
+  bool? hasClosed;
 
   Shop(
       {this.id,
@@ -45,7 +44,8 @@ class Shop {
       this.deliveryTime,
       this.logo,
       this.image,
-      this.hasFreeDelivery});
+      this.hasFreeDelivery,
+      this.hasClosed});
 
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 
