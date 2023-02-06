@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 
@@ -57,5 +58,9 @@ class Shop {
 
   get timeDuration => deliveryTime != null
       ? "${Duration(seconds: deliveryTime!.toInt()).inMinutes} mins"
+      : "";
+
+  get openingTime => openTime != null && openTime!.isNotEmpty
+      ? DateFormat.jm().format(DateTime.parse(openTime!))
       : "";
 }

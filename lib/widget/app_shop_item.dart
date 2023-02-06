@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/location.dart';
@@ -126,9 +125,7 @@ class AppShopItem extends StatelessWidget {
 
   Widget _buildTomorrowOpenTimeTextWidget(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 3),
-      child: Text(
-          S.of(context).openMessage(
-              DateFormat.jm().format(DateTime.fromMillisecondsSinceEpoch(0))),
+      child: Text(S.of(context).openMessage(shop.openingTime),
           style: GoogleFonts.roboto(
               fontSize: 13,
               fontWeight: FontWeight.w500,

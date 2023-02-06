@@ -12,7 +12,7 @@ import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/service_providers/user_service.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
-import 'package:ncart_eats/screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/authentication/login.dart';
 import 'package:ncart_eats/screen/authentication/otp_verification.dart';
 import 'package:ncart_eats/screen/authentication/terms_conditions.dart';
 import 'package:ncart_eats/widget/app_button.dart';
@@ -91,6 +91,7 @@ class _SignUpState extends ConsumerState<SignUp> {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       await UserService.addUserToDB(user);
+      ref.read(currentUserProvider.notifier).setCurrentUser(user);
       ref.read(loaderIndicatorProvider.notifier).hide();
       onSuccess();
     } catch (e) {
