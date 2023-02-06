@@ -8,9 +8,9 @@ import 'package:ncart_eats/screen/landing/splash_screen.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.white, // navigation bar color
+    systemNavigationBarColor: Colors.white,
     statusBarColor: Colors.white,
-    statusBarIconBrightness: Brightness.dark, // status bar color
+    statusBarIconBrightness: Brightness.dark,
   ));
 
   WidgetsFlutterBinding.ensureInitialized();

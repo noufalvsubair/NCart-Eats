@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
@@ -53,6 +54,11 @@ class _HomeState extends ConsumerState<Home> {
 
   List<Widget> _buildExpandableAppBarWidget() => <Widget>[
         SliverAppBar(
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              systemNavigationBarColor: Colors.white,
+              statusBarColor: Colors.white,
+              statusBarIconBrightness: Brightness.dark,
+            ),
             backgroundColor: AppColors.backgroundPrimaryColor,
             expandedHeight: 130,
             floating: true,
@@ -63,8 +69,8 @@ class _HomeState extends ConsumerState<Home> {
                   child: InkWell(
                       onTap: () =>
                           Utilities.navigateTo(context, const Profile()),
-                      child: const Icon(Icons.account_circle,
-                          color: Colors.blueGrey, size: 40)))
+                      child: Icon(Icons.account_circle,
+                          color: AppColors.textHighEmphasisColor, size: 40)))
             ],
             flexibleSpace:
                 FlexibleSpaceBar(background: _buildAppBarHeaderViewWidget()),

@@ -7,6 +7,7 @@ class AppColors {
   static Color positiveSubColor = const Color(0xFFE4FBEE);
   static Color backgroundPrimaryColor = const Color(0xFFFFFFFF);
   static Color backgroundSecondaryColor = const Color(0xFFF1F0F5);
+  static Color backgroundTertiaryColor = const Color(0xFFE6ECF5);
   static Color backgroundOverlayLightColor = const Color(0xFFD9DADC);
   static Color backgroundOverlayDarkColor = const Color(0xFF6A696E);
   static Color textHighestEmphasisColor = const Color(0xFF161A1D);

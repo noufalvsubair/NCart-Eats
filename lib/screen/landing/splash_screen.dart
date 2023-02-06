@@ -8,7 +8,7 @@ import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/current_user/current_user.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
-import 'package:ncart_eats/screen/authentication/Login.dart';
+import 'package:ncart_eats/screen/authentication/login.dart';
 import 'package:ncart_eats/screen/landing/home.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
 

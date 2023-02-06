@@ -15,9 +15,10 @@ class SharedPreferenceHelper {
   final String _user = "user";
   final String _location = "location";
 
-  Future<void> deleteUser() async {
+  Future<void> clearPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(_user);
+    await prefs.remove(_location);
   }
 
   Future<void> setUser(CurrentUser user) async {

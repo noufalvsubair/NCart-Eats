@@ -41,4 +41,11 @@ class CurrentUser {
   Map<String, dynamic> toJson() => _$CurrentUserToJson(this);
 
   get fullName => "${firstName!} ${lastName!}";
+
+  get formattedMobile =>
+      "${mobile!.substring(0, 3)} - ${mobile!.substring(3, 13)}";
+
+  get joiningDuration => createdAt != null && createdAt!.isNotEmpty
+      ? DateTime.now().difference(DateTime.parse(createdAt!)).inDays
+      : 0;
 }
