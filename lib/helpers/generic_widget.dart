@@ -14,12 +14,22 @@ class GenericWidget {
 
   static Widget buildCachedNetworkImage(
           String imageURL, double? borderRadius) =>
-      CachedNetworkImage(
-          imageUrl: imageURL,
-          imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 0),
-                  image:
-                      DecorationImage(image: imageProvider, fit: BoxFit.fill))),
-          placeholder: (context, url) => buildCircularProgressIndicator(true));
+      imageURL.isNotEmpty
+          ? CachedNetworkImage(
+              imageUrl: imageURL,
+              imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(borderRadius ?? 0),
+                      image: DecorationImage(
+                          image: imageProvider, fit: BoxFit.fill))),
+              placeholder: (context, url) =>
+                  buildCircularProgressIndicator(true))
+          : Container();
+
+  static Widget buildDotSeparatorWidget(Color dotColor) => Padding(
+      padding: const EdgeInsets.only(left: 6, right: 5),
+      child: Container(
+          width: 4,
+          height: 4,
+          decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor)));
 }

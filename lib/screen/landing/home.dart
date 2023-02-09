@@ -11,6 +11,7 @@ import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
+import 'package:ncart_eats/screen/details/shop_details.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
 import 'package:ncart_eats/screen/menu/profile.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
@@ -142,7 +143,10 @@ class _HomeState extends ConsumerState<Home> {
 
   Widget _buildOfferCarouselWidget() => Padding(
       padding: const EdgeInsets.only(top: 15),
-      child: AppImageCarousel(offers: dashboardInfo.offers!));
+      child: AppImageCarousel(
+          offers: dashboardInfo.offers!,
+          onTapped: (String offerID) =>
+              Utilities.navigateTo(context, ShopDetails(shopID: offerID))));
 
   Widget _buildShopTitleTextWidget(String title) => Padding(
       padding: const EdgeInsets.only(left: 15, top: 30),
@@ -160,7 +164,8 @@ class _HomeState extends ConsumerState<Home> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (BuildContext context, int index) => AppShopItem(
             shop: openedShops[index],
-            onItemTapped: () {},
+            onItemTapped: () => Utilities.navigateTo(
+                context, ShopDetails(shopID: openedShops[index].id!)),
             onFavouriteIconTapped: () {}));
   }
 

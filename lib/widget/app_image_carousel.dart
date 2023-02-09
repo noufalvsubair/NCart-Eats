@@ -7,8 +7,11 @@ import 'package:ncart_eats/resources/app_colors.dart';
 
 class AppImageCarousel extends StatefulWidget {
   final List<Offer> offers;
+  final ValueChanged<String> onTapped;
 
-  const AppImageCarousel({Key? key, required this.offers}) : super(key: key);
+  const AppImageCarousel(
+      {Key? key, required this.offers, required this.onTapped})
+      : super(key: key);
 
   @override
   State<AppImageCarousel> createState() => _AppImageCarouselState();
@@ -54,13 +57,14 @@ class _AppImageCarouselState extends State<AppImageCarousel> {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       CarouselSlider.builder(
           itemCount: widget.offers.length,
-          itemBuilder: (BuildContext context, int itemIndex, int _) =>
-              Container(
+          itemBuilder: (BuildContext context, int itemIndex, int _) => InkWell(
+              onTap: () => widget.onTapped(widget.offers[itemIndex].offerID!),
+              child: Container(
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(10)),
                   margin: const EdgeInsets.only(left: 16),
                   child: GenericWidget.buildCachedNetworkImage(
-                      widget.offers[itemIndex].image!, 15)),
+                      widget.offers[itemIndex].image!, 15))),
           options: CarouselOptions(
               onPageChanged: (int index, CarouselPageChangedReason _) =>
                   setState(() => selectedIndex = index),

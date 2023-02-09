@@ -27,6 +27,9 @@ class Shop {
   final String? image;
   @JsonKey(name: 'has_free_delivery', defaultValue: false)
   final bool? hasFreeDelivery;
+  @JsonKey(name: 'cost_for_two')
+  final double? costForTwo;
+
   bool? hasClosed;
 
   Shop(
@@ -46,15 +49,16 @@ class Shop {
       this.logo,
       this.image,
       this.hasFreeDelivery,
+      this.costForTwo,
       this.hasClosed});
 
   factory Shop.fromJson(Map<String, dynamic> json) => _$ShopFromJson(json);
 
   Map<String, dynamic> toJson() => _$ShopToJson(this);
 
-  get ratingAndReviewCount =>
+  String ratingAndReviewCount(String optional) =>
       "${rating! > 0 ? rating : ""} ${reviewCount! > 0 ? " "
-          "(${Utilities.viewCountFormatter(reviewCount!)})" : ""}";
+          "(${Utilities.viewCountFormatter(reviewCount!)} $optional)" : ""}";
 
   get timeDuration => deliveryTime != null
       ? "${Duration(seconds: deliveryTime!.toInt()).inMinutes} mins"

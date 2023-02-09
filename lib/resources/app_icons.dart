@@ -11,6 +11,7 @@ class AppIcons {
   static const star = "${svgPath}star.svg";
   static const foodOrder = "${svgPath}food-order.svg";
   static const favourite = "${svgPath}favourite.svg";
+  static const favouriteLight = "${svgPath}favourite-light.svg";
   static const hiddenRestaurant = "${svgPath}hidden-restaurant.svg";
   static const addressBook = "${svgPath}address-book.svg";
   static const message = "${svgPath}message.svg";

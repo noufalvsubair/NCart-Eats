@@ -81,5 +81,10 @@
   "about": "About",
   "sendFeedback": "Send feedback",
   "reportSafetyEmergency": "Report a safety emergency",
-  "logout": "Logout"
+  "logout": "Logout",
+  "ratings": "ratings",
+  "costForTwo": "₹{cost} for two",
+  "ratingDescription": "Ratings are verified and based\non the recent orders, to ensure you\nreceive accurate feedback.",
+  "outlet": "Outlet",
+  "deliveryTo": "Delivery to {deliveryTo}"
 }

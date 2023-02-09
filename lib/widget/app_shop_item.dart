@@ -45,13 +45,6 @@ class AppShopItem extends StatelessWidget {
                       color: AppColors.backgroundPrimaryColor)))
       ]);
 
-  Widget _buildDotSeparatorWidget(Color dotColor) => Padding(
-      padding: const EdgeInsets.only(left: 6, right: 5),
-      child: Container(
-          width: 4,
-          height: 4,
-          decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor)));
-
   Widget _buildRatingAndTimeViewWidget(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 5),
       child: Row(
@@ -61,13 +54,14 @@ class AppShopItem extends StatelessWidget {
             Icon(Icons.stars, size: 20, color: AppColors.positiveColor),
             Padding(
                 padding: const EdgeInsets.only(left: 5),
-                child: Text(shop.ratingAndReviewCount,
+                child: Text(shop.ratingAndReviewCount(''),
                     style: GoogleFonts.roboto(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textHighestEmphasisColor))),
             if (shop.deliveryTime != null)
-              _buildDotSeparatorWidget(AppColors.textHighestEmphasisColor),
+              GenericWidget.buildDotSeparatorWidget(
+                  AppColors.textHighestEmphasisColor),
             if (shop.deliveryTime != null)
               Text(shop.timeDuration,
                   style: GoogleFonts.roboto(
@@ -96,7 +90,8 @@ class AppShopItem extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: AppColors.textMedEmphasisColor)),
                   if (distance.isNotEmpty)
-                    _buildDotSeparatorWidget(AppColors.textMedEmphasisColor),
+                    GenericWidget.buildDotSeparatorWidget(
+                        AppColors.textMedEmphasisColor),
                   if (distance.isNotEmpty)
                     Text(distance,
                         style: GoogleFonts.encodeSans(
@@ -163,14 +158,16 @@ class AppShopItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildShopImageWidget(context),
-              _buildShopInfoViewWidget(context)
-            ]));
+    return InkWell(
+        onTap: onItemTapped,
+        child: Container(
+            margin: const EdgeInsets.only(left: 15, right: 15, top: 20),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildShopImageWidget(context),
+                  _buildShopInfoViewWidget(context)
+                ])));
   }
 }
