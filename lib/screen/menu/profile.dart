@@ -44,11 +44,12 @@ class _ProfileState extends ConsumerState<Profile> {
           iconTheme: IconThemeData(color: AppColors.textHighestEmphasisColor),
           backgroundColor: AppColors.backgroundTertiaryColor));
 
-  Widget _buildUserNameAndMobileWidget() => Expanded(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+  Widget _buildUserNameAndMobileWidget() => Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(currentUser?.firstName ?? '',
                 style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w600,
@@ -88,18 +89,18 @@ class _ProfileState extends ConsumerState<Profile> {
       height: 120,
       child: Card(
           margin: const EdgeInsets.only(left: 10, right: 10),
-          elevation: 5.0,
+          elevation: 0.0,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           shadowColor: AppColors.backgroundTertiaryColor,
           child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 25),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildUserNameAndMobileWidget(),
-                    _buildUserImageWidget()
+                    _buildUserImageWidget(),
+                    _buildUserNameAndMobileWidget()
                   ]))));
 
   Widget _buildHorizontalMenuWidget() => Container(
@@ -132,7 +133,7 @@ class _ProfileState extends ConsumerState<Profile> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("4.67",
+            Text("${currentUser?.rating! ?? 0}",
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     fontSize: 10,
@@ -292,7 +293,10 @@ class _ProfileState extends ConsumerState<Profile> {
                   children: [
                 if (currentUser != null) _buildUserInfoViewWidget(),
                 _buildHorizontalMenuWidget(),
-                _buildYourRatingViewWidget(),
+                if (currentUser != null &&
+                    currentUser!.rating != null &&
+                    currentUser!.rating! > 0)
+                  _buildYourRatingViewWidget(),
                 _buildFoodOrderViewWidget(),
                 _buildMoreMenuViewWidget()
               ])),

@@ -1,4 +1,3 @@
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'offer.g.dart';
@@ -15,10 +14,22 @@ class Offer {
   @JsonKey(name: 'offer_url')
   final String? offerURL;
 
-  Offer({this.id, this.image, this.type, this.offerID, this.offerURL});
+  @JsonKey(name: 'start_time')
+  final String? startTime;
 
-  factory Offer.fromJson(Map<String, dynamic> json) =>
-      _$OfferFromJson(json);
+  @JsonKey(name: 'end_time')
+  final String? endTime;
+
+  Offer(
+      {this.id,
+      this.image,
+      this.type,
+      this.offerID,
+      this.offerURL,
+      this.startTime,
+      this.endTime});
+
+  factory Offer.fromJson(Map<String, dynamic> json) => _$OfferFromJson(json);
 
   Map<String, dynamic> toJson() => _$OfferToJson(this);
 }

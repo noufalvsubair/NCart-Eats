@@ -25,6 +25,8 @@ class CurrentUser {
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
 
+  final double? rating;
+
   CurrentUser(
       {this.uid,
       this.firstName,
@@ -33,7 +35,8 @@ class CurrentUser {
       this.hasAddressAdded,
       this.hasTermAndConditionAgreed,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      this.rating});
 
   factory CurrentUser.fromJson(Map<String, dynamic> json) =>
       _$CurrentUserFromJson(json);

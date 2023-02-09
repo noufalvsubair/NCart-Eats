@@ -65,7 +65,7 @@ class _AppImageCarouselState extends State<AppImageCarousel> {
               onPageChanged: (int index, CarouselPageChangedReason _) =>
                   setState(() => selectedIndex = index),
               height: 190,
-              enableInfiniteScroll: true,
+              enableInfiniteScroll: widget.offers.length > 1,
               padEnds: false)),
       _buildPageIndicatorWidget()
     ]);

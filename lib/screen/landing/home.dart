@@ -6,11 +6,11 @@ import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
-import 'package:ncart_eats/model/offer/offer.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
 import 'package:ncart_eats/screen/menu/profile.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
@@ -24,27 +24,19 @@ class Home extends ConsumerStatefulWidget {
 }
 
 class _HomeState extends ConsumerState<Home> {
+  DashboardState dashboardInfo = DashboardState.initial();
+
   @override
   void initState() {
-    Future.delayed(Duration.zero, () => _fetchOffers());
+    Future.delayed(Duration.zero, () => _fetchDashboardInfo());
 
     super.initState();
   }
 
-  void _fetchOffers() async {
+  void _fetchDashboardInfo() async {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
-      await ref.read(offerProvider.notifier).fetchOffers();
-      _fetchShops();
-    } catch (err) {
-      ref.read(loaderIndicatorProvider.notifier).hide();
-      Utilities.showToastBar(err.toString(), context);
-    }
-  }
-
-  void _fetchShops() async {
-    try {
-      await ref.read(shopProvider.notifier).fetchShops();
+      await ref.read(dashboardInfoProvider.notifier).fetchDashboardInfo();
       ref.read(loaderIndicatorProvider.notifier).hide();
     } catch (err) {
       ref.read(loaderIndicatorProvider.notifier).hide();
@@ -148,15 +140,9 @@ class _HomeState extends ConsumerState<Home> {
     return GenericWidget.buildCircularProgressIndicator(loaderEnabled);
   }
 
-  Widget _buildOfferCarouselWidget() {
-    List<Offer> offers = ref.watch(offerProvider);
-
-    return offers.isNotEmpty
-        ? Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: AppImageCarousel(offers: offers))
-        : Container();
-  }
+  Widget _buildOfferCarouselWidget() => Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: AppImageCarousel(offers: dashboardInfo.offers!));
 
   Widget _buildShopTitleTextWidget(String title) => Padding(
       padding: const EdgeInsets.only(left: 15, top: 30),
@@ -180,11 +166,7 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List<Shop> allShops = ref.watch(shopProvider);
-    List<Shop> openedShops =
-        allShops.where((Shop shop) => !shop.hasClosed!).toList();
-    List<Shop> closedShops =
-        allShops.where((Shop shop) => shop.hasClosed!).toList();
+    dashboardInfo = ref.read(dashboardInfoProvider);
 
     return Scaffold(
         backgroundColor: AppColors.backgroundPrimaryColor,
@@ -198,17 +180,18 @@ class _HomeState extends ConsumerState<Home> {
                   padding: const EdgeInsets.only(bottom: 20),
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
-                    if (openedShops.isNotEmpty) _buildOfferCarouselWidget(),
-                    if (openedShops.isNotEmpty)
+                    if (dashboardInfo.offers!.isNotEmpty)
+                      _buildOfferCarouselWidget(),
+                    if (dashboardInfo.openedShops!.isNotEmpty)
                       _buildShopTitleTextWidget(
                           S.of(context).restaurantsToExplore),
-                    if (openedShops.isNotEmpty)
-                      _buildOpenedShopListWidget(openedShops),
-                    if (closedShops.isNotEmpty)
+                    if (dashboardInfo.openedShops!.isNotEmpty)
+                      _buildOpenedShopListWidget(dashboardInfo.openedShops!),
+                    if (dashboardInfo.closedShops!.isNotEmpty)
                       _buildShopTitleTextWidget(
                           S.of(context).temporarilyClosed),
-                    if (closedShops.isNotEmpty)
-                      _buildOpenedShopListWidget(closedShops)
+                    if (dashboardInfo.closedShops!.isNotEmpty)
+                      _buildOpenedShopListWidget(dashboardInfo.closedShops!)
                   ])),
           _buildCircularProgressWidget()
         ]));
