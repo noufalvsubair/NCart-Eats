@@ -16,6 +16,18 @@ class AppShopInfoCard extends StatelessWidget {
 
   const AppShopInfoCard({Key? key, required this.shopInfo}) : super(key: key);
 
+  Widget _buildShopClosedContainer(BuildContext context) => shopInfo.hasClosed!
+      ? Padding(
+          padding:
+              const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 15),
+          child: Text(
+              S.of(context).shopClosedDescription(shopInfo.openingTime!),
+              style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primaryColor,
+                  fontSize: 14)))
+      : Container();
+
   Widget _buildShopNameContainerWidget() => Padding(
       padding: const EdgeInsets.only(left: 10, right: 15, top: 10),
       child: Row(
@@ -153,6 +165,8 @@ class AppShopInfoCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _buildShopClosedContainer(context),
+            if (shopInfo.hasClosed!) _buildCommonLineSeparatorWidget(),
             _buildShopNameContainerWidget(),
             _buildRatingAndConstForTwoWidget(context),
             _buildCuisinesTextWidget(),

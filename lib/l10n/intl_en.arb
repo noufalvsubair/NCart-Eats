@@ -86,5 +86,7 @@
   "costForTwo": "₹{cost} for two",
   "ratingDescription": "Ratings are verified and based\non the recent orders, to ensure you\nreceive accurate feedback.",
   "outlet": "Outlet",
-  "deliveryTo": "Delivery to {deliveryTo}"
+  "deliveryTo": "Delivery to {deliveryTo}",
+  "add": "Add",
+  "shopClosedDescription": "Uh-oh! Outlet is not accepting orders at the moment. They should be back by {time}"
 }

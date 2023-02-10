@@ -15,4 +15,7 @@ class AppColors {
   static Color textMedEmphasisColor = const Color(0xFF696A6D);
   static Color textLowEmphasisColor = const Color(0xFF8F8F90);
   static Color textLinkEmphasisColor = const Color(0xFF03A9F4);
+  static Color vegetarianTextColor = const Color(0xFF00923F);
+  static Color nonVegetarianTextColor = const Color(0xFFDA251E);
+  static Color activeRatingBarColor = const Color(0xFFFFA500);
 }

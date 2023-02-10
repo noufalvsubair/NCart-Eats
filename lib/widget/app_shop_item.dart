@@ -22,18 +22,14 @@ class AppShopItem extends StatelessWidget {
       : super(key: key);
 
   Widget _buildShopImageWidget(BuildContext context) => Stack(children: [
-        SizedBox(
+        Container(
             width: 110,
             height: 125,
+            foregroundDecoration: BoxDecoration(
+                color: shop.hasClosed! ? Colors.black : Colors.transparent,
+                backgroundBlendMode: BlendMode.saturation,
+                borderRadius: BorderRadius.circular(15)),
             child: GenericWidget.buildCachedNetworkImage(shop.image!, 15)),
-        if (shop.hasClosed!)
-          Container(
-              width: 110,
-              height: 125,
-              foregroundDecoration: BoxDecoration(
-                  color: Colors.black,
-                  backgroundBlendMode: BlendMode.saturation,
-                  borderRadius: BorderRadius.circular(15))),
         if (shop.hasClosed!)
           Positioned(
               bottom: 5,
