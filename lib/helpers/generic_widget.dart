@@ -32,4 +32,20 @@ class GenericWidget {
           width: 4,
           height: 4,
           decoration: BoxDecoration(shape: BoxShape.circle, color: dotColor)));
+
+  static Widget buildDishTypeContainerWidget(bool isVeg) => Container(
+      width: 12,
+      height: 12,
+      padding: const EdgeInsets.all(2),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(3.0),
+          border: Border.all(
+              color: isVeg
+                  ? AppColors.vegetarianTextColor
+                  : AppColors.nonVegetarianTextColor)),
+      child: CircleAvatar(
+          backgroundColor: isVeg
+              ? AppColors.vegetarianTextColor
+              : AppColors.nonVegetarianTextColor));
 }

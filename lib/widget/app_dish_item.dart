@@ -1,40 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
 import 'package:ncart_eats/model/dish/dish.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
+import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/widget/app_counter_button.dart';
 
-class AppFoodItem extends StatelessWidget {
+class AppDishItem extends StatelessWidget {
   final Dish foodInfo;
   final bool hasShopClosed;
 
-  const AppFoodItem({
+  const AppDishItem({
     Key? key,
     required this.foodInfo,
     required this.hasShopClosed,
   }) : super(key: key);
 
-  Widget _buildFoodTypeContainerWidget() => Container(
-      width: 12,
-      height: 12,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(3.0),
-          border: Border.all(
-              color: foodInfo.type == "veg"
-                  ? AppColors.vegetarianTextColor
-                  : AppColors.nonVegetarianTextColor)),
-      child: Container(
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: foodInfo.type == "veg"
-                  ? AppColors.vegetarianTextColor
-                  : AppColors.nonVegetarianTextColor)));
+  Widget _buildBestSellerContainerWidget(BuildContext context) => Container(
+      margin: const EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(AppIcons.bestSeller, width: 10, height: 10),
+            Padding(
+                padding: const EdgeInsets.only(left: 3),
+                child: Text(S.of(context).bestSeller,
+                    style: GoogleFonts.openSans(
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor)))
+          ]));
 
   Widget _buildFoodNameTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 5, right: 10),
@@ -91,13 +90,17 @@ class AppFoodItem extends StatelessWidget {
               fontSize: 14,
               color: AppColors.textMedEmphasisColor)));
 
-  Widget _buildFoodInfoContainerWidget() => Expanded(
+  Widget _buildFoodInfoContainerWidget(BuildContext context) => Expanded(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
             if (foodInfo.type != null && foodInfo.type!.isNotEmpty)
-              _buildFoodTypeContainerWidget(),
+              Row(children: [
+                GenericWidget.buildDishTypeContainerWidget(foodInfo.type == 'veg'),
+                if (foodInfo.isBestSeller!)
+                  _buildBestSellerContainerWidget(context)
+              ]),
             _buildFoodNameTextWidget(),
             _buildFoodPriceTextWidget(),
             if (foodInfo.rating != null && foodInfo.rating! > 0)
@@ -136,7 +139,7 @@ class AppFoodItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildFoodInfoContainerWidget(),
+            _buildFoodInfoContainerWidget(context),
             if (foodInfo.image != null && foodInfo.image!.isNotEmpty)
               _buildFoodImageWidget(context)
           ]));

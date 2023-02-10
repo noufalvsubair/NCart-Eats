@@ -19,4 +19,5 @@ class AppIcons {
   static const feedback = "${svgPath}feedback.svg";
   static const warning = "${svgPath}warning.svg";
   static const logOut = "${svgPath}logout.svg";
+  static const bestSeller = "${svgPath}best-seller.svg";
 }

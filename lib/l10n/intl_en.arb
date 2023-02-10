@@ -88,5 +88,10 @@
   "outlet": "Outlet",
   "deliveryTo": "Delivery to {deliveryTo}",
   "add": "Add",
-  "shopClosedDescription": "Uh-oh! Outlet is not accepting orders at the moment. They should be back by {time}"
+  "shopClosedDescription": "Uh-oh! Outlet is not accepting orders at the moment. They should be back by {time}",
+  "bestSeller": "Best Seller",
+  "menu": "Menu",
+  "searchForDishes": "Search for dishes",
+  "veg": "Veg",
+  "nonVeg": "Non-veg"
 }
