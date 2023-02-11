@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
+import 'package:ncart_eats/helpers/shared_preference.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
+import 'package:ncart_eats/model/cart/cart.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
@@ -14,6 +16,7 @@ import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
 import 'package:ncart_eats/screen/details/shop_details.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
 import 'package:ncart_eats/screen/menu/profile.dart';
+import 'package:ncart_eats/widget/app_bottom_cart_info_card.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
 import 'package:ncart_eats/widget/app_shop_item.dart';
 
@@ -26,10 +29,12 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   DashboardState dashboardInfo = DashboardState.initial();
+  late List<Cart> carts;
 
   @override
   void initState() {
     Future.delayed(Duration.zero, () => _fetchDashboardInfo());
+    carts = [];
 
     super.initState();
   }
@@ -38,11 +43,22 @@ class _HomeState extends ConsumerState<Home> {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       await ref.read(dashboardInfoProvider.notifier).fetchDashboardInfo();
+      _fetchCartInfo();
       ref.read(loaderIndicatorProvider.notifier).hide();
     } catch (err) {
       ref.read(loaderIndicatorProvider.notifier).hide();
       Utilities.showToastBar(err.toString(), context);
     }
+  }
+
+  bool _isCartShopClosed() => dashboardInfo.allShops!
+      .firstWhere((Shop shop) => shop.id == carts.first.shopID)
+      .hasClosed!;
+
+  void _fetchCartInfo() async {
+    List<Cart> currentCarts = await SharedPreferenceHelper.shared.getCart();
+
+    setState(() => carts = currentCarts);
   }
 
   List<Widget> _buildExpandableAppBarWidget() => <Widget>[
@@ -169,6 +185,12 @@ class _HomeState extends ConsumerState<Home> {
             onFavouriteIconTapped: () {}));
   }
 
+  Widget _buildBottomCartInfoCardWidget() =>
+      carts.isNotEmpty && !_isCartShopClosed()
+          ? Positioned(
+              bottom: 15, left: 15, child: AppBottomCartInfoCard(carts: carts))
+          : Container();
+
   @override
   Widget build(BuildContext context) {
     dashboardInfo = ref.read(dashboardInfoProvider);
@@ -198,6 +220,7 @@ class _HomeState extends ConsumerState<Home> {
                     if (dashboardInfo.closedShops!.isNotEmpty)
                       _buildOpenedShopListWidget(dashboardInfo.closedShops!)
                   ])),
+          _buildBottomCartInfoCardWidget(),
           _buildCircularProgressWidget()
         ]));
   }

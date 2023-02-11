@@ -98,5 +98,9 @@
   "items": "{count} Items",
   "from": "From: {name}",
   "extraCharges": "Extra charges may apply",
-  "viewCart": "View Cart"
+  "viewCart": "View Cart",
+  "replaceCartItem": "Replace cart item?",
+  "replaceCartItemDescription": "Your cart contains dishes from {cartShop}. Do you want to discard the selection and add dishes from {shopName}?",
+  "replace": "Replace",
+  "no": "No"
 }

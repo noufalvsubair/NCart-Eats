@@ -119,14 +119,18 @@ class AppDishItem extends StatelessWidget {
   Widget _buildFoodImageWidget(BuildContext context) => SizedBox(
       height: 122,
       child: Stack(children: [
-        Container(
+        SizedBox(
             width: 110,
             height: 110,
-            foregroundDecoration: BoxDecoration(
-                color: hasShopClosed ? Colors.black : Colors.transparent,
-                backgroundBlendMode: BlendMode.saturation,
-                borderRadius: BorderRadius.circular(15)),
             child: GenericWidget.buildCachedNetworkImage(foodInfo.image!, 15)),
+        if (hasShopClosed)
+          Container(
+              width: 110,
+              height: 110,
+              foregroundDecoration: BoxDecoration(
+                  color: Colors.black,
+                  backgroundBlendMode: BlendMode.saturation,
+                  borderRadius: BorderRadius.circular(15))),
         if (!hasShopClosed) _buildAddButtonWidget(context)
       ]));
 
