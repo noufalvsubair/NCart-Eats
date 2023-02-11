@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
+import 'package:ncart_eats/helpers/shared_preference.dart';
 import 'package:ncart_eats/helpers/utilities.dart';
+import 'package:ncart_eats/model/cart/cart.dart';
 import 'package:ncart_eats/model/dish/dish.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
@@ -26,14 +28,27 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
   Shop? shopInfo;
   late String selectedDishType;
   late bool hasBestSellerSelected;
+  late List<CartItem> cartItems;
 
   @override
   void initState() {
-    Future.delayed(Duration.zero, () => _fetchFoodInfo());
     selectedDishType = "";
     hasBestSellerSelected = false;
+    cartItems = [];
+
+    Future.delayed(Duration.zero, () {
+      _fetchCartInfo();
+      _fetchFoodInfo();
+    });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _saveCartToDB();
+
+    super.dispose();
   }
 
   void _fetchFoodInfo() async {
@@ -45,6 +60,43 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
       ref.read(loaderIndicatorProvider.notifier).hide();
       Utilities.showToastBar(err.toString(), context);
     }
+  }
+
+  void _fetchCartInfo() async {
+    Cart? currentCart = await SharedPreferenceHelper.shared.getCart();
+    if (currentCart != null && currentCart.shopID! == widget.shopID) {
+      cartItems = currentCart.cartItems ?? [];
+    }
+
+    setState(() {});
+  }
+
+  void _saveCartToDB() async {
+    if (cartItems.isNotEmpty) {
+      Cart currentCart = Cart(
+          id: DateTime.now().millisecondsSinceEpoch.toDouble(),
+          shopID: widget.shopID,
+          cartItems: cartItems);
+      await SharedPreferenceHelper.shared.setCart(currentCart);
+    }
+  }
+
+  void _addOrUpdateCartItem(Dish dish, int quantity) {
+    int index =
+        cartItems.indexWhere((CartItem cartItem) => cartItem.dishID == dish.id);
+    CartItem cartItem = CartItem(
+        dishID: dish.id!,
+        name: dish.name!,
+        quantity: quantity,
+        price: dish.price!,
+        type: dish.type!);
+    if (index >= 0) {
+      cartItems[index] = cartItem;
+    } else {
+      cartItems.add(cartItem);
+    }
+
+    setState(() {});
   }
 
   Widget _buildAppTitleImageWidget() => Container(
@@ -102,12 +154,11 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
           color: AppColors.textLowEmphasisColor.withOpacity(0.2)),
       child: Stack(children: [
         Center(
-            child: Positioned(
-                child: Text(S.of(context).searchForDishes,
-                    style: GoogleFonts.encodeSans(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 14,
-                        color: AppColors.textMedEmphasisColor)))),
+            child: Text(S.of(context).searchForDishes,
+                style: GoogleFonts.encodeSans(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 14,
+                    color: AppColors.textMedEmphasisColor))),
         Positioned(
             right: 10,
             top: 10,
@@ -183,7 +234,10 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
         padding: EdgeInsets.zero,
         itemBuilder: (BuildContext context, int itemIndex) => AppDishItem(
             foodInfo: filteredDishes[itemIndex],
-            hasShopClosed: shopInfo!.hasClosed!),
+            hasShopClosed: shopInfo!.hasClosed!,
+            cartItems: cartItems,
+            addOrUpdateCart: (int quantity) =>
+                _addOrUpdateCartItem(filteredDishes[itemIndex], quantity)),
         separatorBuilder: (BuildContext context, int index) =>
             _buildFoodItemDividerWidget());
   }
@@ -211,7 +265,7 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
             _buildDishSearchBarWidget(),
             _buildDishTypeAndCategoryContainer(),
             _buildFoodListWidget(),
-            const Padding(padding: EdgeInsets.only(top: 20))
+            // const Padding(padding: EdgeInsets.only(top: 20))
           ]),
           _buildCircularProgressIndicatorWidget()
         ]));

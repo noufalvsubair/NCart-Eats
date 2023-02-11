@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
+import 'package:ncart_eats/model/cart/cart.dart';
 import 'package:ncart_eats/model/dish/dish.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_icons.dart';
@@ -12,12 +13,16 @@ import 'package:ncart_eats/widget/app_counter_button.dart';
 class AppDishItem extends StatelessWidget {
   final Dish foodInfo;
   final bool hasShopClosed;
+  final ValueChanged<int> addOrUpdateCart;
+  final List<CartItem> cartItems;
 
-  const AppDishItem({
-    Key? key,
-    required this.foodInfo,
-    required this.hasShopClosed,
-  }) : super(key: key);
+  const AppDishItem(
+      {Key? key,
+      required this.foodInfo,
+      required this.hasShopClosed,
+      required this.addOrUpdateCart,
+      required this.cartItems})
+      : super(key: key);
 
   Widget _buildBestSellerContainerWidget(BuildContext context) => Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
@@ -97,7 +102,8 @@ class AppDishItem extends StatelessWidget {
               children: [
             if (foodInfo.type != null && foodInfo.type!.isNotEmpty)
               Row(children: [
-                GenericWidget.buildDishTypeContainerWidget(foodInfo.type == 'veg'),
+                GenericWidget.buildDishTypeContainerWidget(
+                    foodInfo.type == 'veg'),
                 if (foodInfo.isBestSeller!)
                   _buildBestSellerContainerWidget(context)
               ]),
@@ -124,13 +130,24 @@ class AppDishItem extends StatelessWidget {
         if (!hasShopClosed) _buildAddButtonWidget(context)
       ]));
 
-  Widget _buildAddButtonWidget(BuildContext context) => Positioned(
-      bottom: 0,
-      left: 10,
-      child: AppCounterButton(
-          label: S.of(context).add,
-          onAddButtonTapped: () {},
-          onUpdateCount: (double value) => {}));
+  Widget _buildAddButtonWidget(BuildContext context) {
+    int quantity = 0;
+    if (cartItems.isNotEmpty) {
+      List<CartItem> filteredItems = cartItems
+          .where((CartItem cartItem) => cartItem.dishID == foodInfo.id)
+          .toList();
+      quantity = filteredItems.isNotEmpty ? filteredItems.first.quantity! : 0;
+    }
+
+    return Positioned(
+        bottom: 0,
+        left: 10,
+        child: AppCounterButton(
+            quantity: quantity,
+            label: S.of(context).add,
+            onAddButtonTapped: () => addOrUpdateCart(1),
+            onUpdateCount: addOrUpdateCart));
+  }
 
   @override
   Widget build(BuildContext context) => Container(

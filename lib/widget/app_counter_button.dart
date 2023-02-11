@@ -4,17 +4,17 @@ import 'package:ncart_eats/resources/app_colors.dart';
 
 class AppCounterButton extends StatelessWidget {
   final String? label;
-  final double? count;
+  final int? quantity;
   final ButtonStyle? buttonStyle;
   final TextStyle? textStyle;
   final Color? counterTextColor;
   final VoidCallback onAddButtonTapped;
-  final ValueChanged<double> onUpdateCount;
+  final ValueChanged<int> onUpdateCount;
 
   const AppCounterButton(
       {Key? key,
       this.label,
-      this.count = 0,
+      this.quantity = 0,
       this.buttonStyle,
       this.textStyle,
       required this.onAddButtonTapped,
@@ -23,7 +23,7 @@ class AppCounterButton extends StatelessWidget {
       : super(key: key);
 
   Widget _buildElevatedButtonWidget() => ElevatedButton(
-      onPressed: () {},
+      onPressed: onAddButtonTapped,
       style: buttonStyle ??
           ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
@@ -38,11 +38,15 @@ class AppCounterButton extends StatelessWidget {
   Widget _buildCountDecrementButtonWidget() => Padding(
       padding: const EdgeInsets.only(left: 10),
       child: InkWell(
-          onTap: () {},
-          child: Container(
-              width: 10, height: 2.5, color: AppColors.positiveColor)));
+          onTap: () => onUpdateCount(quantity! - 1),
+          child: Text('\u2014',
+              style: textStyle ??
+                  GoogleFonts.roboto(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 16,
+                      color: AppColors.positiveColor))));
 
-  Widget _buildCountTextWidget() => Text("${count!.toInt()}",
+  Widget _buildCountTextWidget() => Text("${quantity!}",
       style: textStyle ??
           GoogleFonts.roboto(
               fontWeight: FontWeight.w900,
@@ -52,8 +56,8 @@ class AppCounterButton extends StatelessWidget {
   Widget _buildCountIncrementButtonWidget() => Padding(
       padding: const EdgeInsets.only(right: 10),
       child: InkWell(
-          onTap: () {},
-          child: Text("+",
+          onTap: () => onUpdateCount(quantity! + 1),
+          child: Text('+',
               style: textStyle ??
                   GoogleFonts.roboto(
                       fontWeight: FontWeight.w900,
@@ -85,7 +89,7 @@ class AppCounterButton extends StatelessWidget {
   Widget build(BuildContext context) => SizedBox(
       width: 90,
       height: 30,
-      child: count! > 0
+      child: quantity! > 0
           ? _buildCounterContainerWidget()
           : _buildElevatedButtonWidget());
 }

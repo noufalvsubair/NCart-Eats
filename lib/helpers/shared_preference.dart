@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ncart_eats/model/cart/cart.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/current_user/current_user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ class SharedPreferenceHelper {
   // Keys
   final String _user = "user";
   final String _location = "location";
+  final String _cart = "cart";
 
   Future<void> clearPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -49,5 +51,20 @@ class SharedPreferenceHelper {
     }
 
     return null;
+  }
+
+  Future<Cart?> getCart() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? cartJson = prefs.getString(_cart);
+    if (cartJson != null && cartJson.isNotEmpty) {
+      return Cart.fromJson(jsonDecode(cartJson));
+    }
+
+    return null;
+  }
+
+  Future<void> setCart(Cart cart) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_cart, json.encode(cart));
   }
 }
