@@ -93,5 +93,10 @@
   "menu": "Menu",
   "searchForDishes": "Search for dishes",
   "veg": "Veg",
-  "nonVeg": "Non-veg"
+  "nonVeg": "Non-veg",
+  "item": "{count} Item",
+  "items": "{count} Items",
+  "from": "From: {name}",
+  "extraCharges": "Extra charges may apply",
+  "viewCart": "View Cart"
 }

@@ -14,14 +14,14 @@ class AppDishItem extends StatelessWidget {
   final Dish foodInfo;
   final bool hasShopClosed;
   final ValueChanged<int> addOrUpdateCart;
-  final List<CartItem> cartItems;
+  final List<Cart> carts;
 
   const AppDishItem(
       {Key? key,
       required this.foodInfo,
       required this.hasShopClosed,
       required this.addOrUpdateCart,
-      required this.cartItems})
+      required this.carts})
       : super(key: key);
 
   Widget _buildBestSellerContainerWidget(BuildContext context) => Container(
@@ -132,10 +132,9 @@ class AppDishItem extends StatelessWidget {
 
   Widget _buildAddButtonWidget(BuildContext context) {
     int quantity = 0;
-    if (cartItems.isNotEmpty) {
-      List<CartItem> filteredItems = cartItems
-          .where((CartItem cartItem) => cartItem.dishID == foodInfo.id)
-          .toList();
+    if (carts.isNotEmpty) {
+      List<Cart> filteredItems =
+          carts.where((Cart cart) => cart.dishID == foodInfo.id).toList();
       quantity = filteredItems.isNotEmpty ? filteredItems.first.quantity! : 0;
     }
 

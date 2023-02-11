@@ -78,4 +78,7 @@ class Utilities {
       return "$number";
     }
   }
+
+  static bool isInteger(num value) =>
+      value is int || value == value.roundToDouble();
 }

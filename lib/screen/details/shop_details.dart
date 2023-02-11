@@ -11,6 +11,7 @@ import 'package:ncart_eats/model/dish/dish.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
+import 'package:ncart_eats/widget/app_bottom_cart_info_card.dart';
 import 'package:ncart_eats/widget/app_category_item.dart';
 import 'package:ncart_eats/widget/app_dish_item.dart';
 import 'package:ncart_eats/widget/app_shop_info_card.dart';
@@ -28,13 +29,13 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
   Shop? shopInfo;
   late String selectedDishType;
   late bool hasBestSellerSelected;
-  late List<CartItem> cartItems;
+  late List<Cart> carts;
 
   @override
   void initState() {
     selectedDishType = "";
     hasBestSellerSelected = false;
-    cartItems = [];
+    carts = [];
 
     Future.delayed(Duration.zero, () {
       _fetchCartInfo();
@@ -63,37 +64,35 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
   }
 
   void _fetchCartInfo() async {
-    Cart? currentCart = await SharedPreferenceHelper.shared.getCart();
-    if (currentCart != null && currentCart.shopID! == widget.shopID) {
-      cartItems = currentCart.cartItems ?? [];
-    }
+    List<Cart> currentCarts = await SharedPreferenceHelper.shared.getCart();
 
-    setState(() {});
+    setState(() => carts = currentCarts);
   }
 
   void _saveCartToDB() async {
-    if (cartItems.isNotEmpty) {
-      Cart currentCart = Cart(
-          id: DateTime.now().millisecondsSinceEpoch.toDouble(),
-          shopID: widget.shopID,
-          cartItems: cartItems);
-      await SharedPreferenceHelper.shared.setCart(currentCart);
-    }
+    await SharedPreferenceHelper.shared.setCart(carts);
   }
 
-  void _addOrUpdateCartItem(Dish dish, int quantity) {
-    int index =
-        cartItems.indexWhere((CartItem cartItem) => cartItem.dishID == dish.id);
-    CartItem cartItem = CartItem(
-        dishID: dish.id!,
-        name: dish.name!,
-        quantity: quantity,
-        price: dish.price!,
-        type: dish.type!);
-    if (index >= 0) {
-      cartItems[index] = cartItem;
+  void _addAndUpdateToCart(Dish dishInfo, int quantity) {
+    if (quantity > 0) {
+      int index = carts.indexWhere((Cart cart) => cart.dishID == dishInfo.id);
+      Cart currentCart = Cart(
+          id: DateTime.now().millisecondsSinceEpoch.toDouble(),
+          shopID: shopInfo!.id!,
+          shopName: shopInfo!.name!,
+          dishID: dishInfo.id,
+          dishName: dishInfo.name,
+          price: dishInfo.price,
+          type: dishInfo.type,
+          quantity: quantity);
+
+      if (index >= 0) {
+        carts[index] = currentCart;
+      } else {
+        carts.add(currentCart);
+      }
     } else {
-      cartItems.add(cartItem);
+      carts.removeWhere((Cart cart) => cart.dishID == dishInfo.id);
     }
 
     setState(() {});
@@ -235,9 +234,9 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
         itemBuilder: (BuildContext context, int itemIndex) => AppDishItem(
             foodInfo: filteredDishes[itemIndex],
             hasShopClosed: shopInfo!.hasClosed!,
-            cartItems: cartItems,
+            carts: carts,
             addOrUpdateCart: (int quantity) =>
-                _addOrUpdateCartItem(filteredDishes[itemIndex], quantity)),
+                _addAndUpdateToCart(filteredDishes[itemIndex], quantity)),
         separatorBuilder: (BuildContext context, int index) =>
             _buildFoodItemDividerWidget());
   }
@@ -247,6 +246,13 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
 
     return GenericWidget.buildCircularProgressIndicator(loaderEnabled);
   }
+
+  Widget _buildBottomCartInfoCardWidget() => carts.isNotEmpty
+      ? Positioned(
+          bottom: 15,
+          left: 15,
+          child: AppBottomCartInfoCard(carts: carts, shopID: widget.shopID))
+      : Container();
 
   @override
   Widget build(BuildContext context) {
@@ -265,9 +271,10 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
             _buildDishSearchBarWidget(),
             _buildDishTypeAndCategoryContainer(),
             _buildFoodListWidget(),
-            // const Padding(padding: EdgeInsets.only(top: 20))
+            SizedBox(height: carts.isEmpty ? 20 : 80)
           ]),
-          _buildCircularProgressIndicatorWidget()
+          _buildCircularProgressIndicatorWidget(),
+          _buildBottomCartInfoCardWidget()
         ]));
   }
 }

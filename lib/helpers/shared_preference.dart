@@ -53,18 +53,19 @@ class SharedPreferenceHelper {
     return null;
   }
 
-  Future<Cart?> getCart() async {
+  Future<List<Cart>> getCart() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? cartJson = prefs.getString(_cart);
     if (cartJson != null && cartJson.isNotEmpty) {
-      return Cart.fromJson(jsonDecode(cartJson));
+      return List<Cart>.from(
+          jsonDecode(cartJson).map((x) => Cart.fromJson(x)));
     }
 
-    return null;
+    return [];
   }
 
-  Future<void> setCart(Cart cart) async {
+  Future<void> setCart(List<Cart> carts) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_cart, json.encode(cart));
+    await prefs.setString(_cart, carts.isNotEmpty ? json.encode(carts) : "");
   }
 }
