@@ -92,6 +92,7 @@
   "bestSeller": "Best Seller",
   "menu": "Menu",
   "searchForDishes": "Search for dishes",
+  "searchIn": "Search in ",
   "veg": "Veg",
   "nonVeg": "Non-veg",
   "item": "{count} Item",

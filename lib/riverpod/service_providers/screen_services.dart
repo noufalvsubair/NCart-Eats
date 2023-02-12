@@ -27,3 +27,9 @@ class CurrentLocationService extends StateNotifier<CurrentLocation?> {
 
   void setCurrentLocation(CurrentLocation? location) => state = location;
 }
+
+class ScrollInfoService extends StateNotifier<double> {
+  ScrollInfoService() : super(0);
+
+  void setPixel(double pixel) => state = pixel;
+}

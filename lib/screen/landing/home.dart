@@ -13,9 +13,9 @@ import 'package:ncart_eats/resources/app_colors.dart';
 import 'package:ncart_eats/resources/app_styles.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
-import 'package:ncart_eats/screen/details/shop_details.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
 import 'package:ncart_eats/screen/menu/profile.dart';
+import 'package:ncart_eats/screen/shop/shop_details.dart';
 import 'package:ncart_eats/widget/app_bottom_cart_info_card.dart';
 import 'package:ncart_eats/widget/app_image_carousel.dart';
 import 'package:ncart_eats/widget/app_shop_item.dart';
@@ -204,7 +204,9 @@ class _HomeState extends ConsumerState<Home> {
                   (BuildContext context, bool innerBoxIsScrolled) =>
                       _buildExpandableAppBarWidget(),
               body: ListView(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: carts.isNotEmpty && !_isCartShopClosed()
+                      ? const EdgeInsets.only(bottom: 80)
+                      : const EdgeInsets.only(bottom: 20),
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     if (dashboardInfo.offers!.isNotEmpty)

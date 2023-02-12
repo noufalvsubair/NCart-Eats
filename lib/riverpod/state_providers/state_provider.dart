@@ -8,11 +8,11 @@ import 'package:ncart_eats/riverpod/service_providers/screen_services.dart';
 import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
 
 final timerIndicatorProvider =
-    StateNotifierProvider<TimerIndicatorService, int>(
+    StateNotifierProvider.autoDispose<TimerIndicatorService, int>(
         (ref) => TimerIndicatorService());
 
 final loaderIndicatorProvider =
-    StateNotifierProvider<LoaderIndicatorService, bool>(
+    StateNotifierProvider.autoDispose<LoaderIndicatorService, bool>(
         (ref) => LoaderIndicatorService());
 
 final currentUserProvider =
@@ -28,4 +28,9 @@ final dashboardInfoProvider =
         (ref) => DashboardService());
 
 final dishInfoProvider =
-    StateNotifierProvider<DishService, List<Dish>>((ref) => DishService());
+    StateNotifierProvider.autoDispose<DishService, List<Dish>>(
+        (ref) => DishService());
+
+final scrollInfoProvider =
+    StateNotifierProvider.autoDispose<ScrollInfoService, double>(
+        (ref) => ScrollInfoService());
