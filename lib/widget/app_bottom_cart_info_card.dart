@@ -27,7 +27,7 @@ class AppBottomCartInfoCard extends StatelessWidget {
         ? totalPrice.toInt()
         : totalPrice.toStringAsFixed(2);
 
-    return "$count | ₹$total";
+    return "$count |  ₹$total";
   }
 
   String _createDescription(BuildContext context) =>
@@ -42,14 +42,14 @@ class AppBottomCartInfoCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(_createTotalPriceAndCount(context),
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.robotoFlex(
                     fontWeight: FontWeight.w700,
                     fontSize: 12,
                     color: Colors.white)),
             Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(_createDescription(context),
-                    style: GoogleFonts.encodeSans(
+                    style: GoogleFonts.raleway(
                         fontWeight: FontWeight.w400,
                         fontSize: 11,
                         color: Colors.white)))
@@ -60,7 +60,7 @@ class AppBottomCartInfoCard extends StatelessWidget {
       child: InkWell(
           onTap: () {},
           child: Text(S.of(context).viewCart,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w700,
                   fontSize: 15,
                   color: Colors.white))));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ncart_eats/generated/l10n.dart';
 import 'package:ncart_eats/helpers/generic_widget.dart';
@@ -10,7 +11,7 @@ import 'package:ncart_eats/model/cart/cart.dart';
 import 'package:ncart_eats/model/current_location/current_location.dart';
 import 'package:ncart_eats/model/shop/shop.dart';
 import 'package:ncart_eats/resources/app_colors.dart';
-import 'package:ncart_eats/resources/app_styles.dart';
+import 'package:ncart_eats/resources/app_icons.dart';
 import 'package:ncart_eats/riverpod/state_providers/state_provider.dart';
 import 'package:ncart_eats/riverpod/states/dashboard_state.dart';
 import 'package:ncart_eats/screen/location/set_location.dart';
@@ -101,14 +102,16 @@ class _HomeState extends ConsumerState<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildLocationTypeViewWidget(currentLocation!.type),
-              Padding(
+              Container(
+                  width: MediaQuery.of(context).size.width - 70,
                   padding: const EdgeInsets.only(left: 5, top: 1),
                   child: Text(currentLocation.name!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.roboto(
+                      style: GoogleFonts.raleway(
+                          fontSize: 14,
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textMedEmphasisColor)))
+                          color: AppColors.textHighEmphasisColor)))
             ]));
   }
 
@@ -121,9 +124,9 @@ class _HomeState extends ConsumerState<Home> {
             Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: Text(Utilities.getCurrentLocationType(type, context),
-                    style: GoogleFonts.encodeSans(
+                    style: GoogleFonts.raleway(
                         fontSize: 14,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                         color: AppColors.textHighestEmphasisColor))),
             Icon(Icons.arrow_drop_down,
                 size: 22, color: AppColors.backgroundOverlayDarkColor)
@@ -136,20 +139,23 @@ class _HomeState extends ConsumerState<Home> {
           height: 45,
           margin:
               const EdgeInsets.only(left: 12, right: 10, top: 15, bottom: 15),
-          padding: const EdgeInsets.only(left: 12),
+          padding: const EdgeInsets.only(left: 12, right: 15),
           decoration: BoxDecoration(
-              color: Colors.blueGrey.withOpacity(0.15),
+              color: AppColors.backgroundTertiaryColor,
               borderRadius: BorderRadius.circular(10.0)),
-          child: TextField(
-              cursorColor: AppColors.primaryColor,
-              decoration: AppStyles.fieldDecorationWithIcon(
-                  context,
-                  S.of(context).globalSearch,
-                  SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: Icon(Icons.search_rounded,
-                          size: 25, color: AppColors.textLowEmphasisColor))))));
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(S.of(context).globalSearch,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 14,
+                        color: AppColors.textHighEmphasisColor)),
+                SvgPicture.asset(AppIcons.search, width: 20, height: 20)
+              ])));
 
   Widget _buildCircularProgressWidget() {
     bool loaderEnabled = ref.watch(loaderIndicatorProvider);
@@ -167,7 +173,7 @@ class _HomeState extends ConsumerState<Home> {
   Widget _buildShopTitleTextWidget(String title) => Padding(
       padding: const EdgeInsets.only(left: 15, top: 30),
       child: Text(title,
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.raleway(
               fontWeight: FontWeight.w600,
               fontSize: 16,
               color: AppColors.textHighestEmphasisColor)));

@@ -78,9 +78,9 @@ class _LoginState extends ConsumerState<Login> {
   Widget _buildTitleTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Text(S.of(context).signIn.toUpperCase(),
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.raleway(
               fontSize: 20,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w800,
               color: AppColors.textHighestEmphasisColor)));
 
   Widget _buildPhoneNumberFieldWidget() => Container(
@@ -122,7 +122,7 @@ class _LoginState extends ConsumerState<Login> {
                     onTap: () => Utilities.navigateTo(
                         context, const TermsAndCondition()),
                     child: Text(S.of(context).termAndCondition,
-                        style: GoogleFonts.roboto(
+                        style: GoogleFonts.raleway(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textLinkEmphasisColor))))
@@ -155,14 +155,14 @@ class _LoginState extends ConsumerState<Login> {
           child: RichText(
               text: TextSpan(
                   text: S.of(context).continueAs,
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.raleway(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: AppColors.textLowEmphasisColor),
+                      color: AppColors.textMedEmphasisColor),
                   children: [
                 TextSpan(
                     text: S.of(context).guest,
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.raleway(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                         color: AppColors.textHighestEmphasisColor))

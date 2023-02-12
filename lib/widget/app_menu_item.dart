@@ -59,9 +59,9 @@ class AppMenuItem extends StatelessWidget {
                               padding: const EdgeInsets.only(left: 10),
                               child: Text(label,
                                   style: textStyle ??
-                                      GoogleFonts.poppins(
+                                      GoogleFonts.raleway(
                                           fontWeight: FontWeight.w400,
-                                          fontSize: 12,
+                                          fontSize: 14,
                                           color: AppColors
                                               .textHighestEmphasisColor)))
                         ]),

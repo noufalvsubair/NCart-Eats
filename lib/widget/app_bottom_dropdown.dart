@@ -42,8 +42,8 @@ class AppBottomDropdown extends StatelessWidget {
                     EdgeInsets.only(left: dotPadding!, right: valuePadding!),
                 child: Text(title!,
                     style: titleStyle ??
-                        GoogleFonts.roboto(
-                            fontWeight: FontWeight.w500,
+                        GoogleFonts.robotoFlex(
+                            fontWeight: FontWeight.w600,
                             color: AppColors.textHighestEmphasisColor,
                             fontSize: 11))),
           InkWell(
@@ -51,8 +51,8 @@ class AppBottomDropdown extends StatelessWidget {
               child: Row(children: [
                 Text(value,
                     style: valueStyle ??
-                        GoogleFonts.roboto(
-                            fontWeight: FontWeight.w300,
+                        GoogleFonts.raleway(
+                            fontWeight: FontWeight.w400,
                             color: AppColors.textHighestEmphasisColor,
                             fontSize: 11)),
                 Icon(Icons.arrow_drop_down,

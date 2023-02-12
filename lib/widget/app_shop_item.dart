@@ -35,9 +35,9 @@ class AppShopItem extends StatelessWidget {
               bottom: 5,
               left: 5,
               child: Text(S.of(context).closed.toUpperCase(),
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.raleway(
                       fontSize: 15,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                       color: AppColors.backgroundPrimaryColor)))
       ]);
 
@@ -51,8 +51,8 @@ class AppShopItem extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(left: 5),
                 child: Text(shop.ratingAndReviewCount(''),
-                    style: GoogleFonts.roboto(
-                        fontSize: 15,
+                    style: GoogleFonts.robotoFlex(
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textHighestEmphasisColor))),
             if (shop.deliveryTime != null)
@@ -81,18 +81,18 @@ class AppShopItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(shop.location!,
-                      style: GoogleFonts.encodeSans(
+                      style: GoogleFonts.raleway(
                           fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textMedEmphasisColor)),
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textHighEmphasisColor)),
                   if (distance.isNotEmpty)
                     GenericWidget.buildDotSeparatorWidget(
                         AppColors.textMedEmphasisColor),
                   if (distance.isNotEmpty)
                     Text(distance,
-                        style: GoogleFonts.encodeSans(
+                        style: GoogleFonts.robotoFlex(
                             fontSize: 14,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w300,
                             color: AppColors.textMedEmphasisColor)),
                 ]));
       });
@@ -104,20 +104,21 @@ class AppShopItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(Icons.delivery_dining_rounded,
-                size: 15, color: AppColors.textLowEmphasisColor),
+                size: 15,
+                color: AppColors.textLowEmphasisColor.withOpacity(0.6)),
             Padding(
                 padding: const EdgeInsets.only(left: 5),
                 child: Text(S.of(context).freeDelivery,
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.robotoFlex(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: AppColors.textLowEmphasisColor)))
+                        color: AppColors.textMedEmphasisColor)))
           ]));
 
   Widget _buildTomorrowOpenTimeTextWidget(BuildContext context) => Padding(
       padding: const EdgeInsets.only(top: 3),
       child: Text(S.of(context).openMessage(shop.openingTime),
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.robotoFlex(
               fontSize: 13,
               fontWeight: FontWeight.w500,
               color: AppColors.textMedEmphasisColor)));
@@ -131,7 +132,7 @@ class AppShopItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(shop.name!,
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.raleway(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: AppColors.textHighestEmphasisColor)),
@@ -142,10 +143,10 @@ class AppShopItem extends StatelessWidget {
                       child: Text(shop.cuisines!.join(", "),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: GoogleFonts.encodeSans(
+                          style: GoogleFonts.raleway(
                               fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textMedEmphasisColor))),
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.textHighEmphasisColor))),
                 _buildLocationAndDistanceWidget(),
                 if (shop.hasFreeDelivery! && !shop.hasClosed!)
                   _buildFreeDeliveryViewWidget(context),

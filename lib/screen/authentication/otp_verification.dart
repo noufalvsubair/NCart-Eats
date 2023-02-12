@@ -145,24 +145,24 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).otpVerification,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildOTPDescriptionTextWidget() => Center(
           child: RichText(
               text: TextSpan(
                   text: S.of(context).otpVerificationDescription,
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.raleway(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: AppColors.textLowEmphasisColor),
                   children: [
             TextSpan(
                 text: '+91${widget.phoneNumber}',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w500,
+                style: GoogleFonts.robotoFlex(
+                    fontWeight: FontWeight.w600,
                     fontSize: 15,
                     color: AppColors.textHighEmphasisColor))
           ])));
@@ -177,12 +177,12 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
 
   Widget _buildResendTextWidget(int time) =>
       Text(time == 0 ? S.of(context).resend : '${S.of(context).resend}($time)',
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.robotoFlex(
               fontWeight: FontWeight.bold,
               fontSize: 15,
               color: time == 0
                   ? AppColors.textHighEmphasisColor
-                  : AppColors.textLowEmphasisColor));
+                  : AppColors.textMedEmphasisColor));
 
   Widget _buildResendButtonWidget() {
     int time = ref.watch(timerIndicatorProvider);
@@ -204,10 +204,10 @@ class _OtpVerificationState extends ConsumerState<OtpVerification> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(S.of(context).resendOtpDescription,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.raleway(
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
-                    color: AppColors.textLowEmphasisColor)),
+                    color: AppColors.textMedEmphasisColor)),
             _buildResendButtonWidget()
           ]));
 

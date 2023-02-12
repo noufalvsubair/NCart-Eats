@@ -50,15 +50,15 @@ class _ProfileState extends ConsumerState<Profile> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(currentUser?.firstName ?? '',
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w600,
+            Text(currentUser?.fullName ?? '',
+                style: GoogleFonts.raleway(
+                    fontWeight: FontWeight.w700,
                     fontSize: 18,
                     color: AppColors.textHighestEmphasisColor)),
             Padding(
                 padding: const EdgeInsets.only(top: 7),
                 child: Text(currentUser!.mobile ?? "",
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.robotoFlex(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textHighestEmphasisColor)))
@@ -78,7 +78,7 @@ class _ProfileState extends ConsumerState<Profile> {
               shape: BoxShape.circle, color: Colors.blueGrey),
           child: Text(
               '${currentUser?.firstName![0]}${currentUser?.lastName![0]}',
-              style: GoogleFonts.encodeSans(
+              style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w900,
                   fontSize: 28,
                   color: AppColors.backgroundPrimaryColor)),
@@ -123,37 +123,6 @@ class _ProfileState extends ConsumerState<Profile> {
                 onTapped: () {})
           ]));
 
-  Widget _buildRatingStarWidget() => Container(
-      padding: const EdgeInsets.only(left: 5, right: 5, top: 2, bottom: 2),
-      margin: const EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: AppColors.backgroundTertiaryColor),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text("${currentUser?.rating! ?? 0}",
-                style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 10,
-                    color: AppColors.textHighestEmphasisColor)),
-            const Icon(Icons.star, color: Colors.orangeAccent, size: 10)
-          ]));
-
-  Widget _buildYourRatingViewWidget() => Card(
-      margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-      color: AppColors.backgroundPrimaryColor,
-      elevation: 0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: AppMenuItem(
-          svgIcon: AppIcons.star,
-          label: S.of(context).yourRating,
-          optionalItem: _buildRatingStarWidget(),
-          padding:
-              const EdgeInsets.only(left: 10, right: 15, top: 10, bottom: 10),
-          onTapped: () {}));
-
   Widget _buildMenuItemTitleWidget(String title) => Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,8 +138,8 @@ class _ProfileState extends ConsumerState<Profile> {
             Padding(
                 padding: const EdgeInsets.only(left: 10),
                 child: Text(title,
-                    style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600,
+                    style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w700,
                         fontSize: 13,
                         color: AppColors.textHighestEmphasisColor)))
           ]);
@@ -293,10 +262,6 @@ class _ProfileState extends ConsumerState<Profile> {
                   children: [
                 if (currentUser != null) _buildUserInfoViewWidget(),
                 _buildHorizontalMenuWidget(),
-                if (currentUser != null &&
-                    currentUser!.rating != null &&
-                    currentUser!.rating! > 0)
-                  _buildYourRatingViewWidget(),
                 _buildFoodOrderViewWidget(),
                 _buildMoreMenuViewWidget()
               ])),

@@ -202,14 +202,14 @@ class _SignUpState extends ConsumerState<SignUp> {
           child: RichText(
               text: TextSpan(
                   text: S.of(context).continueAs,
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.raleway(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
-                      color: AppColors.textLowEmphasisColor),
+                      color: AppColors.textMedEmphasisColor),
                   children: [
                 TextSpan(
                     text: S.of(context).guest,
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.raleway(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                         color: AppColors.textHighestEmphasisColor))

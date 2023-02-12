@@ -30,8 +30,8 @@ class AppCounterButton extends StatelessWidget {
                   AppColors.backgroundPrimaryColor)),
       child: Text(label!,
           style: textStyle ??
-              GoogleFonts.roboto(
-                  fontWeight: FontWeight.bold,
+              GoogleFonts.raleway(
+                  fontWeight: FontWeight.w700,
                   fontSize: 14,
                   color: AppColors.positiveColor)));
 
@@ -41,14 +41,14 @@ class AppCounterButton extends StatelessWidget {
           onTap: () => onUpdateCount(quantity! - 1),
           child: Text('\u2014',
               style: textStyle ??
-                  GoogleFonts.roboto(
+                  GoogleFonts.robotoFlex(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                       color: AppColors.positiveColor))));
 
   Widget _buildCountTextWidget() => Text("${quantity!}",
       style: textStyle ??
-          GoogleFonts.roboto(
+          GoogleFonts.robotoFlex(
               fontWeight: FontWeight.w900,
               fontSize: 15,
               color: AppColors.positiveColor));
@@ -59,7 +59,7 @@ class AppCounterButton extends StatelessWidget {
           onTap: () => onUpdateCount(quantity! + 1),
           child: Text('+',
               style: textStyle ??
-                  GoogleFonts.roboto(
+                  GoogleFonts.robotoFlex(
                       fontWeight: FontWeight.w900,
                       fontSize: 16,
                       color: AppColors.positiveColor))));

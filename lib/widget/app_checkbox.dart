@@ -22,7 +22,7 @@ class AppCheckbox extends StatelessWidget {
               activeColor: AppColors.primaryColor,
               onChanged: (bool? checked) => onChanged!(checked)),
           Text(label!,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textHighestEmphasisColor))

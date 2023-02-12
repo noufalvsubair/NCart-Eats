@@ -47,7 +47,7 @@ class AppCategoryItem extends StatelessWidget {
                       child: GenericWidget.buildDishTypeContainerWidget(
                           type == 'veg')),
                 Text(label,
-                    style: GoogleFonts.encodeSans(
+                    style: GoogleFonts.raleway(
                         fontWeight: FontWeight.w700,
                         fontSize: 12,
                         color: AppColors.textHighEmphasisColor)),

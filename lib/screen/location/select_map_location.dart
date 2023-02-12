@@ -115,7 +115,7 @@ class _SelectMapLocationState extends ConsumerState<SelectMapLocation> {
                         padding: const EdgeInsets.only(left: 5),
                         child: Text(selectedLocation!.name!,
                             overflow: TextOverflow.ellipsis,
-                            style: GoogleFonts.openSans(
+                            style: GoogleFonts.raleway(
                                 color: AppColors.textHighestEmphasisColor,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500))))

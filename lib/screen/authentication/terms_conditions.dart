@@ -19,9 +19,9 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).termAndCondition,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildTermsAndConditionItemWidget(String title, String description) =>
@@ -33,8 +33,8 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
               Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 15),
                   child: Text(title,
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.bold,
+                      style: GoogleFonts.raleway(
+                          fontWeight: FontWeight.w700,
                           fontSize: 15,
                           color: AppColors.textHighestEmphasisColor))),
             Padding(

@@ -34,25 +34,25 @@ class AppDishItem extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: Text(S.of(context).bestSeller,
-                    style: GoogleFonts.openSans(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                    style: GoogleFonts.raleway(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w800,
                         color: AppColors.primaryColor)))
           ]));
 
   Widget _buildFoodNameTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 5, right: 10),
       child: Text(foodInfo.name!,
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
+          style: GoogleFonts.raleway(
+              fontWeight: FontWeight.w700,
               fontSize: 15,
               color: AppColors.textHighestEmphasisColor)));
 
   Widget _buildFoodPriceTextWidget() => Padding(
       padding: const EdgeInsets.only(top: 10, right: 10),
       child: Text("₹${foodInfo.price!}",
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w400,
+          style: GoogleFonts.robotoFlex(
+              fontWeight: FontWeight.w500,
               fontSize: 15,
               color: AppColors.textHighestEmphasisColor)));
 
@@ -72,15 +72,15 @@ class AppDishItem extends StatelessWidget {
             Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: Text("${foodInfo.rating!}",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500,
+                    style: GoogleFonts.robotoFlex(
+                        fontWeight: FontWeight.w600,
                         fontSize: 14,
                         color: AppColors.activeRatingBarColor))),
             Padding(
                 padding: const EdgeInsets.only(left: 3),
                 child: Text("(${foodInfo.reviewCount!.toInt()})",
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500,
+                    style: GoogleFonts.robotoFlex(
+                        fontWeight: FontWeight.w600,
                         fontSize: 14,
                         color: AppColors.textMedEmphasisColor)))
           ]));
@@ -90,7 +90,7 @@ class AppDishItem extends StatelessWidget {
       child: Text(foodInfo.description!,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.raleway(
               fontWeight: FontWeight.w400,
               fontSize: 14,
               color: AppColors.textMedEmphasisColor)));
@@ -119,11 +119,15 @@ class AppDishItem extends StatelessWidget {
   Widget _buildFoodImageWidget(BuildContext context) => SizedBox(
       height: 122,
       child: Stack(children: [
-        SizedBox(
-            width: 110,
-            height: 110,
-            child: GenericWidget.buildCachedNetworkImage(foodInfo.image!, 15)),
-        if (hasShopClosed)
+        if (foodInfo.image != null && foodInfo.image!.isNotEmpty)
+          SizedBox(
+              width: 110,
+              height: 110,
+              child:
+                  GenericWidget.buildCachedNetworkImage(foodInfo.image!, 15)),
+        if (hasShopClosed &&
+            foodInfo.image != null &&
+            foodInfo.image!.isNotEmpty)
           Container(
               width: 110,
               height: 110,
@@ -131,7 +135,11 @@ class AppDishItem extends StatelessWidget {
                   color: Colors.black,
                   backgroundBlendMode: BlendMode.saturation,
                   borderRadius: BorderRadius.circular(15))),
-        if (!hasShopClosed) _buildAddButtonWidget(context)
+        if (!hasShopClosed)
+          foodInfo.image != null && foodInfo.image!.isNotEmpty
+              ? Positioned(
+                  bottom: 0, left: 10, child: _buildAddButtonWidget(context))
+              : Center(child: _buildAddButtonWidget(context))
       ]));
 
   Widget _buildAddButtonWidget(BuildContext context) {
@@ -142,14 +150,11 @@ class AppDishItem extends StatelessWidget {
       quantity = filteredItems.isNotEmpty ? filteredItems.first.quantity! : 0;
     }
 
-    return Positioned(
-        bottom: 0,
-        left: 10,
-        child: AppCounterButton(
-            quantity: quantity,
-            label: S.of(context).add,
-            onAddButtonTapped: () => addOrUpdateCart(1),
-            onUpdateCount: addOrUpdateCart));
+    return AppCounterButton(
+        quantity: quantity,
+        label: S.of(context).add,
+        onAddButtonTapped: () => addOrUpdateCart(1),
+        onUpdateCount: addOrUpdateCart);
   }
 
   @override
@@ -160,7 +165,6 @@ class AppDishItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildFoodInfoContainerWidget(context),
-            if (foodInfo.image != null && foodInfo.image!.isNotEmpty)
-              _buildFoodImageWidget(context)
+            _buildFoodImageWidget(context)
           ]));
 }

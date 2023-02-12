@@ -50,9 +50,9 @@ class _SetLocationState extends ConsumerState<SetLocation> {
           backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(S.of(context).setLocation,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   color: AppColors.textHighestEmphasisColor))));
 
   Widget _buildEmptyIconWidget() =>
@@ -61,10 +61,10 @@ class _SetLocationState extends ConsumerState<SetLocation> {
   Widget _buildEmptyMessageTextWidget() => Padding(
       padding: const EdgeInsets.only(left: 15, right: 15, top: 25, bottom: 25),
       child: Text(S.of(context).emptyAddress,
-          style: GoogleFonts.roboto(
+          style: GoogleFonts.raleway(
               fontWeight: FontWeight.w500,
               fontSize: 14,
-              color: AppColors.textLowEmphasisColor)));
+              color: AppColors.textMedEmphasisColor)));
 
   Widget _buildUseCurrentLocationButtonWidget(bool enabled) => AppButton(
       label: S.of(context).useCurrentLocation,

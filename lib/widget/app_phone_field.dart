@@ -20,7 +20,7 @@ class AppPhoneField extends StatelessWidget {
           Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text("+91",
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.robotoFlex(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
                       color: AppColors.textHighEmphasisColor))),
@@ -33,6 +33,10 @@ class AppPhoneField extends StatelessWidget {
                   controller: fieldEditController,
                   keyboardType: TextInputType.number,
                   maxLength: 10,
+                  style: GoogleFonts.robotoFlex(
+                      fontSize: 14,
+                      color: AppColors.textHighestEmphasisColor,
+                      fontWeight: FontWeight.w400),
                   cursorColor: AppColors.primaryColor,
                   decoration:
                       AppStyles.fieldDecorations(context, S.of(context).phone)))

@@ -34,8 +34,8 @@ class _AppImageCarouselState extends State<AppImageCarousel> {
           borderRadius: BorderRadius.circular(10),
           color: AppColors.textHighEmphasisColor),
       child: Text("${selectedIndex + 1}/${widget.offers.length}",
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w500,
+          style: GoogleFonts.robotoFlex(
+              fontWeight: FontWeight.w600,
               fontSize: 10,
               color: AppColors.backgroundPrimaryColor)));
 

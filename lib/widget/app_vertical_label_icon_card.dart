@@ -53,11 +53,11 @@ class AppVerticalLabelIconCard extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 10),
                           child: Text(label,
                               style: textStyle ??
-                                  GoogleFonts.roboto(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 12,
+                                  GoogleFonts.raleway(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
                                       color:
-                                          AppColors.textHighestEmphasisColor)))
+                                          AppColors.textHighEmphasisColor)))
                     ]))));
   }
 }

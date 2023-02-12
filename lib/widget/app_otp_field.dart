@@ -109,7 +109,7 @@ class _AppOtpFieldState extends State<AppOtpField> {
             keyboardType: widget.keyboardType,
             textCapitalization: widget.textCapitalization,
             textAlign: TextAlign.center,
-            style: GoogleFonts.roboto(
+            style: GoogleFonts.robotoFlex(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
                 color: AppColors.textHighEmphasisColor),

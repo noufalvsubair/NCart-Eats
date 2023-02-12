@@ -150,7 +150,7 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
   Widget _buildAppTitleTextWidget() =>
       shopInfo != null && shopInfo!.name!.isNotEmpty
           ? Text(shopInfo!.name!,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   fontSize: 18,
                   color: AppColors.textHighestEmphasisColor,
                   fontWeight: FontWeight.w700))
@@ -217,9 +217,9 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
       padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
       child: Center(
           child: Text(S.of(context).menu,
-              style: GoogleFonts.roboto(
+              style: GoogleFonts.raleway(
                   color: AppColors.textHighestEmphasisColor,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w800,
                   fontSize: 16))));
 
   Widget _buildSearchBackButtonWidget() {
@@ -241,16 +241,16 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
             text: pixelMetrics > 285
                 ? S.of(context).searchIn
                 : S.of(context).searchForDishes,
-            style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w400,
+            style: GoogleFonts.raleway(
+                fontWeight: FontWeight.w300,
                 fontSize: 14,
-                color: AppColors.textHighestEmphasisColor),
+                color: AppColors.textHighEmphasisColor),
             children: [
           if (pixelMetrics > 285)
             TextSpan(
                 text: shopInfo!.name!,
-                style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w700,
+                style: GoogleFonts.raleway(
+                    fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: AppColors.textHighestEmphasisColor))
         ]));
@@ -263,7 +263,7 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
         padding: const EdgeInsets.only(left: 10, right: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: AppColors.textLowEmphasisColor.withOpacity(0.2)),
+            color: AppColors.backgroundTertiaryColor),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,

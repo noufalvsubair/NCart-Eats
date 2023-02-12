@@ -40,9 +40,9 @@ class AppButton extends StatelessWidget {
                           : AppColors.primaryColor)),
             Text(label,
                 textAlign: TextAlign.center,
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.raleway(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w700,
                     color: type == ButtonType.primary.toString()
                         ? AppColors.backgroundPrimaryColor
                         : AppColors.primaryColor))

@@ -22,10 +22,10 @@ class AppShopInfoCard extends StatelessWidget {
               const EdgeInsets.only(left: 10, top: 20, right: 10, bottom: 15),
           child: Text(
               S.of(context).shopClosedDescription(shopInfo.openingTime!),
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.raleway(
                   fontWeight: FontWeight.w500,
                   color: AppColors.primaryColor,
-                  fontSize: 14)))
+                  fontSize: 15)))
       : Container();
 
   Widget _buildShopNameContainerWidget() => Padding(
@@ -36,9 +36,9 @@ class AppShopInfoCard extends StatelessWidget {
           children: [
             Expanded(
                 child: Text(shopInfo.name!,
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.raleway(
                         color: AppColors.textHighestEmphasisColor,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w800,
                         fontSize: 18))),
             Row(children: [
               _buildShareButtonWidget(),
@@ -69,9 +69,9 @@ class AppShopInfoCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5, right: 2),
                 child: Text(
                     shopInfo.ratingAndReviewCount(S.of(context).ratings),
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.robotoFlex(
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: AppColors.textHighestEmphasisColor))),
             _buildShopRatingInfoToolTipWidget(context),
             GenericWidget.buildDotSeparatorWidget(
@@ -80,9 +80,9 @@ class AppShopInfoCard extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 5),
                 child: Text(
                     S.of(context).costForTwo(shopInfo.costForTwo!.toInt()),
-                    style: GoogleFonts.roboto(
+                    style: GoogleFonts.robotoFlex(
                         fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w600,
                         color: AppColors.textHighestEmphasisColor)))
           ]));
 
@@ -97,7 +97,7 @@ class AppShopInfoCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       verticalOffset: 10,
-      textStyle: GoogleFonts.roboto(
+      textStyle: GoogleFonts.raleway(
           fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
       child: Icon(Icons.info_outline_rounded,
           size: 14, color: AppColors.backgroundOverlayDarkColor));
@@ -108,8 +108,8 @@ class AppShopInfoCard extends StatelessWidget {
           shopInfo.cuisines!.length > 2
               ? shopInfo.cuisines!.sublist(0, 2).join(', ')
               : shopInfo.cuisines!.join(", "),
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w300,
+          style: GoogleFonts.raleway(
+              fontWeight: FontWeight.w400,
               color: AppColors.textHighestEmphasisColor,
               fontSize: 13)));
 

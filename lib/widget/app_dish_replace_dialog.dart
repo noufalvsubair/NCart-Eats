@@ -21,8 +21,8 @@ class AppDishReplaceDialog extends StatelessWidget {
 
   Widget _buildTitleTextWidget(BuildContext context) =>
       Text(S.of(context).replaceCartItem,
-          style: GoogleFonts.roboto(
-              fontWeight: FontWeight.bold,
+          style: GoogleFonts.raleway(
+              fontWeight: FontWeight.w700,
               fontSize: 18,
               color: AppColors.textHighestEmphasisColor));
 
@@ -32,7 +32,7 @@ class AppDishReplaceDialog extends StatelessWidget {
           S
               .of(context)
               .replaceCartItemDescription(cartShopName, currentShopName),
-          style: GoogleFonts.lato(
+          style: GoogleFonts.raleway(
               fontWeight: FontWeight.w400,
               fontSize: 16,
               color: AppColors.textMedEmphasisColor)));

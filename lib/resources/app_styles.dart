@@ -6,10 +6,10 @@ class AppStyles {
   static InputDecoration fieldDecorations(BuildContext context, String hint) =>
       InputDecoration(
           hintText: hint,
-          hintStyle: GoogleFonts.roboto(
+          hintStyle: GoogleFonts.raleway(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.textLowEmphasisColor),
+              color: AppColors.textMedEmphasisColor),
           border: InputBorder.none,
           counterText: "");
 
@@ -17,10 +17,10 @@ class AppStyles {
           BuildContext context, String hint, Widget? icon) =>
       InputDecoration(
           hintText: hint,
-          hintStyle: GoogleFonts.roboto(
+          hintStyle: GoogleFonts.raleway(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.textLowEmphasisColor),
+              color: AppColors.textMedEmphasisColor),
           border: InputBorder.none,
           icon: icon!,
           counterText: "");
