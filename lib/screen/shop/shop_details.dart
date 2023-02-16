@@ -60,18 +60,12 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
     try {
       ref.read(loaderIndicatorProvider.notifier).show();
       await ref.read(dishInfoProvider.notifier).fetchFoodInfo(widget.shopID);
-      _fetchCartInfo();
+      await ref.read(cartInfoProvider.notifier).fetchCartInfo();
       ref.read(loaderIndicatorProvider.notifier).hide();
     } catch (err) {
       ref.read(loaderIndicatorProvider.notifier).hide();
       Utilities.showToastBar(err.toString(), context);
     }
-  }
-
-  void _fetchCartInfo() async {
-    List<Cart> currentCarts = await SharedPreferenceHelper.shared.getCart();
-
-    setState(() => carts = currentCarts);
   }
 
   void _saveCartToDB() async {
@@ -100,32 +94,9 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
   }
 
   void _addAndUpdateToCart(Dish dishInfo, int quantity, bool keepEmpty) {
-    if (keepEmpty) {
-      carts.clear();
-    }
-
-    if (quantity > 0) {
-      int index = carts.indexWhere((Cart cart) => cart.dishID == dishInfo.id);
-      Cart currentCart = Cart(
-          id: DateTime.now().millisecondsSinceEpoch.toDouble(),
-          shopID: shopInfo!.id!,
-          shopName: shopInfo!.name!,
-          dishID: dishInfo.id,
-          dishName: dishInfo.name,
-          price: dishInfo.price,
-          type: dishInfo.type,
-          quantity: quantity);
-
-      if (index >= 0) {
-        carts[index] = currentCart;
-      } else {
-        carts.add(currentCart);
-      }
-    } else {
-      carts.removeWhere((Cart cart) => cart.dishID == dishInfo.id);
-    }
-
-    setState(() {});
+    ref
+        .read(cartInfoProvider.notifier)
+        .addOrUpdateCartItem(dishInfo, quantity, keepEmpty, shopInfo!);
   }
 
   void _scrollToTop() {
@@ -395,6 +366,7 @@ class _ShopDetailsState extends ConsumerState<ShopDetails> {
         .allShops!
         .firstWhere((Shop shop) => shop.id == widget.shopID);
     bool loaderEnabled = ref.watch(loaderIndicatorProvider);
+    carts = ref.watch(cartInfoProvider);
 
     return Scaffold(
         backgroundColor: AppColors.backgroundPrimaryColor,
